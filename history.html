@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>苏晚 · 浏览器历史</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* 历史页面独有样式 */
+        .history-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            background: #f7f2e6;
+            border: 4px double #b8a68b;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.25);
+            min-height: 80vh;
+        }
+
+        .history-header {
+            border-bottom: 3px double #b8a68b;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .history-header h1 {
+            font-size: 22px;
+            font-weight: normal;
+            color: #5a4a38;
+            letter-spacing: 3px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .history-header .time {
+            font-size: 13px;
+            color: #8f7d66;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .history-welcome {
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 1.9;
+            padding: 12px 16px;
+            background: rgba(200, 185, 165, 0.15);
+            border-left: 4px solid #c9bbaa;
+            margin-bottom: 24px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .history-welcome strong {
+            color: #3d3228;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .history-list li {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e6ddcf;
+            font-size: 14px;
+            color: #4a3d30;
+            font-family: "SimSun", "宋体", serif;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .history-list li:hover {
+            background: rgba(200, 185, 165, 0.12);
+        }
+
+        .history-list .icon {
+            color: #8f7d66;
+            font-size: 16px;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+
+        .history-list .link-text {
+            color: #6a5a48;
+            text-decoration: none;
+            border-bottom: 1px dashed #c9bbaa;
+            cursor: default;
+            flex: 1;
+        }
+
+        .history-list .link-text:hover {
+            border-bottom-color: #8f7d66;
+            color: #3d3228;
+        }
+
+        .history-list .time-tag {
+            font-size: 11px;
+            color: #aa9a88;
+            flex-shrink: 0;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        /* 用户备注 */
+        .user-note {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(180, 60, 50, 0.06);
+            border: 1px solid rgba(180, 60, 50, 0.15);
+            border-radius: 2px;
+            font-size: 14px;
+            color: #6a3a2a;
+            font-family: "SimSun", "宋体", serif;
+            line-height: 1.9;
+        }
+
+        .user-note strong {
+            color: #8a3a2a;
+        }
+
+        .user-note .quote {
+            font-style: italic;
+            color: #5a2a1a;
+            display: block;
+            margin-top: 6px;
+            padding-left: 16px;
+            border-left: 3px solid #c9a090;
+        }
+
+        .history-footer {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 2px solid #ddd0bf;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .history-footer a {
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 13px;
+            font-family: "SimSun", "宋体", serif;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            padding: 2px 4px;
+        }
+
+        .history-footer a:hover {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+        }
+
+        /* 隐藏线索：在历史记录里埋一个“可点击”的假链接 */
+        .fake-link {
+            color: #6a5a48;
+            border-bottom: 1px dashed #c9bbaa;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .fake-link:hover {
+            color: #8a3a2a;
+            border-bottom-color: #8a3a2a;
+        }
+
+        /* 弹窗（用于显示隐藏线索） */
+        .clue-toast {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: rgba(60, 40, 30, 0.08);
+            border-left: 4px solid #8a3a2a;
+            font-size: 13px;
+            color: #4a3d30;
+            font-family: "SimSun", "宋体", serif;
+            line-height: 1.8;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .clue-toast.show {
+            display: block;
+        }
+
+        @media (max-width: 640px) {
+            .history-wrapper {
+                padding: 20px 16px;
+                margin: 10px;
+            }
+            .history-header h1 {
+                font-size: 18px;
+            }
+            .history-list li {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .history-list .time-tag {
+                width: 100%;
+                padding-left: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="history-wrapper">
+        <!-- 页眉 -->
+        <div class="history-header">
+            <h1>📋 苏晚 · 浏览器历史</h1>
+            <span class="time">最后活动：2022年3月12日 15:47</span>
+        </div>
+
+        <!-- 欢迎 -->
+        <div class="history-welcome">
+            <strong>苏晚的最后一次会员访问记录</strong>
+            这是苏晚留在我们网站后台的最后一次访问记录。
+            她登录了她的会员账号，我们只保留了她最后搜索的关键词。
+        </div>
+
+        <!-- 搜索历史列表 -->
+        <ul class="history-list">
+            <li>
+                <span class="icon">🔍</span>
+                <a href="forum.html" class="link-text" style="color:#8a3a2a; border-bottom:1px solid #c9a090;">永宁路18号 事故</a>
+                <span class="time-tag">14:23</span>
+            </li>
+            <li>
+                <span class="icon">🔍</span>
+                <a href="news.html" class="link-text" style="color:#8a3a2a; border-bottom:1px solid #c9a090;">陈永宁 是谁</a>
+                <span class="time-tag">14:41</span>
+            </li>
+            <li>
+                <span class="icon">🔍</span>
+                <span class="link-text">安居中介 老板 姓名</span>
+                <span class="time-tag">14:58</span>
+            </li>
+            <li>
+                <span class="icon">🔍</span>
+                <a href="archive.html" class="link-text" style="color:#8a3a2a; border-bottom:1px solid #c9a090;">江陵县 2008 坠楼</a>
+                <span class="time-tag">15:12</span>
+            </li>
+            <li>
+                <span class="icon">🔍</span>
+                <a href="blog.html" class="link-text" style="color:#8a3a2a; border-bottom:1px solid #c9a090;">302室 前任租客</a>
+                <span class="time-tag">15:26</span>
+            </li>
+            <li>
+                <span class="icon">🔍</span>
+                <span class="link-text fake-link" onclick="toggleClue('clueToast')">镜子 风水 禁忌</span>
+                <span class="time-tag">15:38</span>
+            </li>
+        </ul>
+
+        <!-- 隐藏线索（点击“镜子 风水 禁忌”触发） -->
+        <div class="clue-toast" id="clueToast">
+            <strong>📌 隐藏备注：</strong><br />
+            苏晚在搜索“镜子 风水 禁忌”后，在备注栏留下了一段话：<br />
+            <span style="color:#6a3a2a; display:block; margin-top:6px; padding-left:12px; border-left:3px solid #c9a090;">
+                “302卧室的镜子是后来才挂上去的。房东说前一个租客装的。<br />
+                但我去查了物业记录——前一个租客搬走的时候，镜子就已经在了。<br />
+                那是谁装的？”
+            </span>
+        </div>
+
+        <!-- 用户备注 -->
+        <div class="user-note">
+            <strong>⚠️ 系统自动记录 · 用户备注</strong>
+            <span class="quote">「这栋楼在呼吸。」</span>
+            <span style="display:block; font-size:12px; color:#aa9a88; margin-top:6px;">
+                —— 苏晚 · 15:47 退出登录前最后输入
+            </span>
+        </div>
+
+        <!-- 底部导航 -->
+        <div class="history-footer">
+            <a href="index.html">← 返回安居中介首页</a>
+            <a href="#" onclick="alert('🔒 需要更多权限才能查看。')">查看完整日志 »</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

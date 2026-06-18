@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>302 · 最终抉择</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ===== 结局页面专属样式 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1410;
+            font-family: "SimSun", "宋体", serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .ending-wrapper {
+            max-width: 700px;
+            width: 100%;
+            background: #f7f2e6;
+            border: 4px double #4a3d30;
+            border-radius: 4px;
+            padding: 36px 40px 28px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+            position: relative;
+            min-height: 80vh;
+        }
+
+        .ending-header {
+            border-bottom: 3px double #b8a68b;
+            padding-bottom: 14px;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .ending-header .room-number {
+            font-size: 14px;
+            color: #8f7d66;
+            letter-spacing: 6px;
+        }
+
+        .ending-header h1 {
+            font-size: 24px;
+            font-weight: normal;
+            color: #3d3228;
+            letter-spacing: 6px;
+            margin-top: 4px;
+        }
+
+        .ending-header .sub {
+            font-size: 13px;
+            color: #8f7d66;
+            letter-spacing: 3px;
+            margin-top: 2px;
+        }
+
+        .choice-area {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 24px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .choice-btn {
+            flex: 1;
+            min-width: 160px;
+            max-width: 240px;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-family: "SimSun", "宋体", serif;
+            background: #fcf8f0;
+            border: 2px solid #b8a68b;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 4px;
+            color: #4a3d30;
+        }
+
+        .choice-btn:hover {
+            border-color: #8a3a2a;
+            background: rgba(180, 60, 50, 0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(60, 40, 20, 0.1);
+        }
+
+        .choice-btn .icon {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .choice-btn .label {
+            display: block;
+            font-size: 14px;
+        }
+
+        .choice-btn .desc {
+            display: block;
+            font-size: 11px;
+            color: #8f7d66;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* 选择后隐藏选择区域 */
+        .choice-area.hidden {
+            display: none;
+        }
+
+        /* 结局展示 */
+        .ending-display {
+            display: none;
+            margin-top: 10px;
+            padding: 20px 22px;
+            border: 2px solid #ddd0bf;
+            border-radius: 2px;
+            background: #fcf8f0;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .ending-display.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .ending-display .ending-title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #ddd0bf;
+            margin-bottom: 14px;
+        }
+
+        .ending-display .ending-title .badge {
+            font-size: 12px;
+            font-weight: normal;
+            padding: 2px 12px;
+            border-radius: 2px;
+            margin-left: 10px;
+            letter-spacing: 2px;
+        }
+
+        .ending-display .ending-title .badge.truth {
+            background: #3a6a3a;
+            color: #f7f2e6;
+        }
+
+        .ending-display .ending-title .badge.cycle {
+            background: #6a3a2a;
+            color: #f7f2e6;
+        }
+
+        .ending-display .ending-content {
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 2.2;
+        }
+
+        .ending-display .ending-content p {
+            margin-bottom: 10px;
+        }
+
+        .ending-display .ending-content .highlight {
+            color: #8a3a2a;
+            font-weight: bold;
+        }
+
+        .ending-display .ending-content .quote-block {
+            display: block;
+            padding: 10px 16px;
+            margin: 8px 0 10px 12px;
+            border-left: 3px solid #c9a090;
+            background: rgba(200, 185, 165, 0.1);
+            color: #5a4a38;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        /* 结局底部 */
+        .ending-footer {
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 2px solid #ddd0bf;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .ending-footer a {
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            padding: 2px 4px;
+        }
+
+        .ending-footer a:hover {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .ending-wrapper {
+                padding: 20px 16px;
+                min-height: auto;
+            }
+            .ending-header h1 {
+                font-size: 20px;
+                letter-spacing: 4px;
+            }
+            .choice-area {
+                flex-direction: column;
+                align-items: center;
+            }
+            .choice-btn {
+                max-width: 100%;
+                width: 100%;
+            }
+            .ending-display {
+                padding: 14px 16px;
+            }
+            .ending-display .ending-title {
+                font-size: 16px;
+            }
+            .ending-display .ending-content {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ending-wrapper">
+        <!-- 头部 -->
+        <div class="ending-header">
+            <div class="room-number">· 永宁路18号 ·</div>
+            <h1>最终抉择</h1>
+            <div class="sub">—— 你站在302室的门口 ——</div>
+        </div>
+
+        <!-- 提示 -->
+        <p style="font-size:14px; color:#4a3d30; text-align:center; line-height:1.9; margin-bottom:10px;" id="choicePrompt">
+            铜钥匙在你手里。门的另一边，是苏晚消失的地方。<br />
+            你要怎么做？
+        </p>
+
+        <!-- 选择按钮 -->
+        <div class="choice-area" id="choiceArea">
+            <button class="choice-btn" onclick="showEnding('truth')">
+                <span class="icon">📞</span>
+                <span class="label">报警</span>
+                <span class="desc">公开所有证据</span>
+            </button>
+            <button class="choice-btn" onclick="showEnding('cycle')">
+                <span class="icon">🚪</span>
+                <span class="label">开门进去</span>
+                <span class="desc">自己去302室</span>
+            </button>
+        </div>
+
+        <!-- ===== 结局A：真相 ===== -->
+        <div class="ending-display" id="endingTruth">
+            <div class="ending-title">
+                📋 结局：真相
+                <span class="badge truth">解开</span>
+            </div>
+            <div class="ending-content">
+                <p>你报了警。</p>
+                <p>你把所有证据——日记、论坛帖子、档案馆记录、博客截图——全部提交给了江陵县公安局。</p>
+                <p>三天后，警方持搜查令进入永宁路18号302室。他们在墙体夹层中找到了一部手机和苏晚的日记本。</p>
+                <p>手机里有最后一条未发送的短信：</p>
+                <span class="quote-block">“林夕，如果我出不来——告诉所有人，这栋楼下面埋着一个人。”</span>
+                <p>警方随后调取了永宁路18号的原始施工档案。档案显示，<span class="highlight">1998年施工期间确实有一起“工人失踪”事件被记录</span>，但当年被定性为“自行离岗”，未立案。</p>
+                <p>陈建国（开发商）在案件重启调查后第三天被警方带走问话。他承认了当年的事故——<span class="highlight">陈永宁掉入地基后，他为了不耽误工期，下令继续施工，没有报警</span>。</p>
+                <p>2008年，施工队在维修地下管道时发现了遗骨。陈建国用钱封了口。</p>
+                <p>同年，陈永宁的母亲李秀芬在302室写下诅咒后失踪。她的下落至今不明。</p>
+                <p style="margin-top:12px; padding-top:12px; border-top:1px solid #e6ddcf; color:#3a6a3a;">
+                    ✅ 诅咒被打破——因为秘密被说出了口。
+                </p>
+                <p style="color:#8f7d66; font-size:13px; margin-top:6px;">
+                    ⚠️ 苏晚仍然下落不明。但警方在废墟中发现了一张照片：<br />
+                    拆迁现场，挖掘机挖到地基时，镜头里出现了一个人影——<span class="highlight">是苏晚</span>，她站在废墟中，看着镜头微笑。
+                </p>
+                <p style="color:#8f7d66; font-size:12px; margin-top:8px; text-align:right;">
+                    —— 她出来了。或者说，她从来就没进去过。
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== 结局B：循环 ===== -->
+        <div class="ending-display" id="endingCycle">
+            <div class="ending-title">
+                🔄 结局：循环
+                <span class="badge cycle">未解</span>
+            </div>
+            <div class="ending-content">
+                <p>你决定自己去302室。</p>
+                <p>铜钥匙插进锁孔的那一刻，你听到身后有一个声音：<span style="color:#8a3a2a; font-style:italic;">“你确定吗？”</span></p>
+                <p>你回头，走廊里空无一人。</p>
+                <p>你拧动了钥匙。</p>
+                <p style="padding:8px 14px; background:rgba(180,60,50,0.06); border-left:3px solid #8a3a2a; font-size:14px; color:#5a2a1a; margin:10px 0;">
+                    门开了。屋子里有一股旧木头和灰尘的味道。<br />
+                    正对着门的墙上，挂着一面落地镜。<br />
+                    镜子里——你看到了苏晚。<br />
+                    她在对你笑。
+                </p>
+                <p>你回过头，身后没有人。</p>
+                <p>再转回镜子——<span class="highlight">你看到的不再是苏晚。</span></p>
+                <p>镜子里站着的是你自己。但你的身后，多了一个人。</p>
+                <p>一个穿着红色衣服的女人。</p>
+                <p style="margin-top:12px; padding-top:12px; border-top:1px solid #e6ddcf; color:#6a3a2a;">
+                    ⚠️ 你成了下一个。
+                </p>
+                <p style="color:#8f7d66; font-size:13px; margin-top:6px;">
+                    第二天，安居房产中介的网站上多了一条新房源：<br />
+                    <span style="color:#8a3a2a; letter-spacing:2px;">“永宁路18号·302室·低价急售”</span>
+                </p>
+                <p style="color:#8f7d66; font-size:12px; margin-top:8px; text-align:right;">
+                    —— 欢迎新住户。
+                </p>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <div class="ending-footer">
+            <a href="index.html">🏠 安居中介首页</a>
+            <a href="history.html">📋 苏晚的搜索记录</a>
+        </div>
+
+    </div>
+
+    <script>
+        function showEnding(type) {
+            const choiceArea = document.getElementById('choiceArea');
+            const prompt = document.getElementById('choicePrompt');
+            const truthEl = document.getElementById('endingTruth');
+            const cycleEl = document.getElementById('endingCycle');
+
+            // 隐藏选择区域
+            choiceArea.classList.add('hidden');
+            prompt.style.display = 'none';
+
+            // 隐藏所有结局
+            truthEl.classList.remove('show');
+            cycleEl.classList.remove('show');
+
+            // 显示对应结局
+            if (type === 'truth') {
+                truthEl.classList.add('show');
+            } else if (type === 'cycle') {
+                cycleEl.classList.add('show');
+            }
+
+            // 滚动到结局
+            setTimeout(() => {
+                const display = document.querySelector('.ending-display.show');
+                if (display) {
+                    display.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 200);
+        }
+
+        console.log('%c🚪 302室', 'font-size:18px; color:#d6c9b8;');
+        console.log('%c💡 门牌号就是钥匙。', 'font-size:13px; color:#8f7d66;');
+    </script>
+</body>
+</html>

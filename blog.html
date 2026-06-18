@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>302室 · 租客日记</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ===== 博客专属样式 ===== */
+        .blog-wrapper {
+            max-width: 820px;
+            margin: 0 auto;
+            background: #fcf8f0;
+            border: 1px solid #d6c9b8;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(60, 40, 20, 0.12);
+            font-family: "SimSun", "宋体", serif;
+            overflow: hidden;
+        }
+
+        .blog-header {
+            background: #3d3228;
+            padding: 20px 28px 16px;
+            border-bottom: 3px solid #8a7a6a;
+        }
+
+        .blog-header .blog-title {
+            color: #f7f2e6;
+            font-size: 22px;
+            font-weight: normal;
+            letter-spacing: 4px;
+        }
+
+        .blog-header .blog-sub {
+            color: #aa9a88;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 4px;
+        }
+
+        .blog-header .blog-sub span {
+            color: #c9a090;
+        }
+
+        .blog-body {
+            padding: 24px 28px 30px;
+        }
+
+        .blog-post {
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e6ddcf;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .blog-post .post-date {
+            font-size: 12px;
+            color: #8f7d66;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .blog-post .post-title {
+            font-size: 17px;
+            color: #3d3228;
+            font-weight: normal;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .blog-post .post-body {
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 2;
+            padding-left: 4px;
+        }
+
+        .blog-post .post-body .highlight {
+            color: #8a3a2a;
+            font-weight: bold;
+        }
+
+        .blog-post .post-body .quote-block {
+            display: block;
+            padding: 10px 16px;
+            margin: 8px 0 6px 12px;
+            border-left: 3px solid #c9a090;
+            background: rgba(200, 185, 165, 0.1);
+            color: #5a4a38;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .blog-post.last-post {
+            background: rgba(180, 60, 50, 0.03);
+            padding: 16px 18px;
+            border-left: 3px solid #8a3a2a;
+            border-bottom: 2px solid #e6ddcf;
+            margin-bottom: 28px;
+        }
+
+        .blog-post.last-post .post-date {
+            color: #8a3a2a;
+        }
+
+        .blog-post.last-post .post-body {
+            color: #5a3a2a;
+        }
+
+        .comment-section {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 2px solid #ddd0bf;
+        }
+
+        .comment-section .comment-title {
+            font-size: 14px;
+            color: #5a4a38;
+            letter-spacing: 2px;
+            font-weight: normal;
+            margin-bottom: 14px;
+        }
+
+        .comment-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comment-item {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e6ddcf;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #4a3d30;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-item .comment-author {
+            font-weight: bold;
+            color: #5a4a38;
+        }
+
+        .comment-item .comment-time {
+            font-size: 11px;
+            color: #aa9a88;
+            margin-left: 12px;
+        }
+
+        .comment-item .comment-body {
+            margin-top: 2px;
+            padding-left: 4px;
+        }
+
+        .comment-item.key-clue {
+            background: rgba(180, 60, 50, 0.05);
+            border-left: 3px solid #8a3a2a;
+            padding-left: 18px;
+        }
+
+        .comment-item.key-clue .comment-author {
+            color: #6a3a2a;
+        }
+
+        .comment-item.key-clue .comment-body {
+            color: #5a3a2a;
+        }
+
+        .blog-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e6ddcf;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #f5efe6;
+        }
+
+        .blog-footer a {
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            padding: 2px 4px;
+        }
+
+        .blog-footer a:hover {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+        }
+
+        /* ===== ★ 隐形线索：修复版 ===== */
+        .hidden-clue {
+            position: fixed;
+            bottom: 16px;
+            left: 20px;
+            color: #d6c9b0;
+            font-size: 14px;
+            letter-spacing: 3px;
+            font-family: "SimSun", "宋体", serif;
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            cursor: default;
+            z-index: 9999;
+            pointer-events: auto;
+            caret-color: transparent;
+            text-shadow: none;
+            background: transparent;
+            opacity: 1;
+            /* 防止任何边框或轮廓 */
+            outline: none;
+            border: none;
+        }
+
+        /* 选中时高亮，让玩家发现 */
+        .hidden-clue::selection {
+            background: rgba(138, 42, 26, 0.3);
+            color: #8a3a2a;
+        }
+
+        /* Firefox 兼容 */
+        .hidden-clue::-moz-selection {
+            background: rgba(138, 42, 26, 0.3);
+            color: #8a3a2a;
+        }
+
+        @media (max-width: 640px) {
+            .blog-wrapper {
+                margin: 8px;
+                border-radius: 2px;
+            }
+            .blog-header {
+                padding: 16px 18px 12px;
+            }
+            .blog-header .blog-title {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+            .blog-body {
+                padding: 16px 16px 20px;
+            }
+            .blog-post .post-title {
+                font-size: 15px;
+            }
+            .blog-post .post-body {
+                font-size: 13px;
+            }
+            .blog-footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            .comment-item {
+                font-size: 12px;
+                padding: 10px 10px;
+            }
+            .hidden-clue {
+                font-size: 12px;
+                bottom: 10px;
+                left: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-wrapper">
+        <!-- 博客头部 -->
+        <div class="blog-header">
+            <div class="blog-title">永宁路18号 · 302室</div>
+            <div class="blog-sub">—— 一个住过302的人的日记 —— <span>｜ 最后更新：2022年6月</span></div>
+        </div>
+
+        <!-- 博客正文 -->
+        <div class="blog-body">
+
+            <!-- 文章1 -->
+            <div class="blog-post">
+                <div class="post-date">📅 2021年9月1日</div>
+                <div class="post-title">搬进来了</div>
+                <div class="post-body">
+                    <p>搬进来了。房子真便宜，一个月300块，我以为是捡漏了。</p>
+                    <p>中介那个张伟签合同的时候跟我说：“有事打我电话，但半夜别打。”我心想你半夜也不接啊，没在意。</p>
+                </div>
+            </div>
+
+            <!-- 文章2 -->
+            <div class="blog-post">
+                <div class="post-date">📅 2021年9月15日</div>
+                <div class="post-title">楼上的脚步声</div>
+                <div class="post-body">
+                    <p>住进来半个月，唯一不对劲的就是楼上。每天晚上12点整，楼上准时响起脚步声。</p>
+                    <p>我确认过——<span class="highlight">楼上401没人住</span>。我跟张伟说过这事，他说：“老房子隔音差，可能是隔壁单元的。”但声音就是从头顶传来的，我分得清。</p>
+                </div>
+            </div>
+
+            <!-- 文章3 -->
+            <div class="blog-post">
+                <div class="post-date">📅 2021年10月3日</div>
+                <div class="post-title">猫疯了</div>
+                <div class="post-body">
+                    <p>我的猫叫煤球，养了三年，特别亲人。今天我想把它抱进卧室，它刚进门就开始剧烈挣扎，爪子把我胳膊抓出三道血痕。</p>
+                    <p>我把它放出去，它一头扎进阳台角落，怎么叫都不出来。</p>
+                </div>
+            </div>
+
+            <!-- 文章4 -->
+            <div class="blog-post">
+                <div class="post-date">📅 2021年11月20日</div>
+                <div class="post-title">衣柜后面</div>
+                <div class="post-body">
+                    <p>我在衣柜后面发现了一行字。红笔写的，字迹很旧了，但还看得清：</p>
+                    <span class="quote-block">“别信中介，别住302。”</span>
+                    <p>我拍照发给了张伟，问他这怎么回事。他回了一句：“上一个租客写的，神经病，你别管。”</p>
+                </div>
+            </div>
+
+            <!-- 文章5（关键：镜像文字） -->
+            <div class="blog-post">
+                <div class="post-date">📅 2022年1月5日</div>
+                <div class="post-title">镜子</div>
+                <div class="post-body">
+                    <p>我查到了。我知道陈永宁是谁了。</p>
+                    <p>那天晚上我在卧室里踱步，盯着那面镜子看了很久。镜子里好像有东西。</p>
+                    <p>我壮着胆子把镜子挪开了——墙上还有字，是反着写的。</p>
+
+                    <!-- Canvas绘制的镜像文字 -->
+                    <div style="margin: 12px 0 8px 12px; border: 1px solid #d6c9b8; border-radius:2px; overflow:hidden; background:#1e1612; display:inline-block; max-width:340px;">
+                        <canvas id="mirrorCanvas" width="340" height="240"></canvas>
+                    </div>
+                    <div style="font-size:11px; color:#8f7d66; padding-left:12px; margin-bottom:6px;">
+                        [ 博主拍摄：镜子后面的墙，文字是反的 ]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文章6：最后一篇 -->
+            <div class="blog-post last-post">
+                <div class="post-date">📅 2022年6月</div>
+                <div class="post-title">我走了</div>
+                <div class="post-body">
+                    <p>我知道陈永宁是谁了。我今晚就走。</p>
+                    <p style="color:#8f7d66; font-size:12px; margin-top:6px;">（博主再未更新）</p>
+                    <!-- 入口线索 -->
+                    <p style="color:#8f7d66; font-size:12px; margin-top:12px; border-top:1px solid #e6ddcf; padding-top:12px;">
+                        —— 门牌号，就是钥匙。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 评论区 -->
+            <div class="comment-section">
+                <div class="comment-title">💬 评论（3条）</div>
+                <ul class="comment-list">
+                    <li class="comment-item">
+                        <span class="comment-author">匿名用户</span>
+                        <span class="comment-time">2022年6月</span>
+                        <div class="comment-body">搬走了？找到什么了？</div>
+                    </li>
+                    <li class="comment-item">
+                        <span class="comment-author">江陵老住户</span>
+                        <span class="comment-time">2022年6月</span>
+                        <div class="comment-body">这栋楼有问题不是一天两天了。你能走就走吧。</div>
+                    </li>
+                    <li class="comment-item key-clue">
+                        <span class="comment-author">🔸 匿名用户</span>
+                        <span class="comment-time">2022年7月</span>
+                        <div class="comment-body">
+                            <span style="color:#8a3a2a; font-weight:bold;">302的镜子，后面。</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="blog-footer">
+                <a href="history.html">← 返回苏晚的浏览器历史</a>
+                <a href="forum.html">📋 返回论坛</a>
+                <a href="index.html">🏠 安居中介首页</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== ★ 隐形线索：左下角 ===== -->
+    <div class="hidden-clue">—— 302.html</div>
+
+    <script src="script.js"></script>
+    <script>
+        // 绘制镜像文字
+        (function() {
+            const canvas = document.getElementById('mirrorCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width,
+                h = canvas.height;
+
+            // 旧墙背景
+            const grad = ctx.createLinearGradient(0, 0, w, h);
+            grad.addColorStop(0, '#e8ddd0');
+            grad.addColorStop(0.5, '#ddd0c0');
+            grad.addColorStop(1, '#d0c0b0');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // 墙面纹理
+            for (let i = 0; i < 800; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                const a = Math.random() * 0.06;
+                ctx.fillStyle = `rgba(160, 140, 120, ${a})`;
+                ctx.fillRect(x, y, 4 + Math.random() * 8, 2 + Math.random() * 4);
+            }
+
+            // 裂纹
+            ctx.strokeStyle = 'rgba(120, 100, 80, 0.08)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 6; i++) {
+                ctx.beginPath();
+                let x = 20 + Math.random() * (w - 40);
+                let y = 20 + Math.random() * (h - 40);
+                ctx.moveTo(x, y);
+                for (let j = 0; j < 5; j++) {
+                    x += (Math.random() - 0.5) * 40;
+                    y += (Math.random() - 0.5) * 30;
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+
+            // 污渍
+            for (let i = 0; i < 4; i++) {
+                const x = 30 + Math.random() * (w - 60);
+                const y = 30 + Math.random() * (h - 60);
+                const r = 20 + Math.random() * 50;
+                const grad2 = ctx.createRadialGradient(x, y, 0, x, y, r);
+                grad2.addColorStop(0, `rgba(100, 80, 60, ${0.02 + Math.random() * 0.04})`);
+                grad2.addColorStop(1, 'rgba(100, 80, 60, 0)');
+                ctx.fillStyle = grad2;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 镜像翻转绘制文字
+            ctx.save();
+            ctx.translate(w, 0);
+            ctx.scale(-1, 1);
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.fillStyle = '#6a1a0a';
+            ctx.font = 'bold 28px "KaiTi", "楷体", "STKaiti", serif';
+            ctx.shadowColor = 'rgba(100, 20, 10, 0.15)';
+            ctx.shadowBlur = 6;
+            ctx.fillText('陈永宁 1998-2008', w / 2, 70);
+
+            ctx.fillStyle = '#7a2a1a';
+            ctx.font = '22px "KaiTi", "楷体", "STKaiti", serif';
+            ctx.shadowColor = 'rgba(100, 20, 10, 0.12)';
+            ctx.shadowBlur = 4;
+            ctx.fillText('「妈对不起你。」', w / 2, 130);
+
+            ctx.fillStyle = '#8a4a3a';
+            ctx.font = '14px "KaiTi", "楷体", "STKaiti", serif';
+            ctx.shadowColor = 'rgba(100, 20, 10, 0.06)';
+            ctx.shadowBlur = 2;
+            ctx.fillText('—— 陈永宁之母 · 李秀芬', w / 2, 185);
+
+            ctx.restore();
+
+            // 暗角
+            const vigGrad = ctx.createRadialGradient(w / 2, h / 2, w * 0.2, w / 2, h / 2, w * 0.8);
+            vigGrad.addColorStop(0, 'rgba(0,0,0,0)');
+            vigGrad.addColorStop(1, 'rgba(0,0,0,0.15)');
+            ctx.fillStyle = vigGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // 噪点
+            for (let i = 0; i < 100; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                const a = Math.random() * 0.03;
+                ctx.fillStyle = `rgba(0, 0, 0, ${a})`;
+                ctx.fillRect(x, y, 2, 2);
+            }
+        })();
+    </script>
+</body>
+</html>

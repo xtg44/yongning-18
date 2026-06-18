@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>安居房产中介 · 江陵县</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- 页眉 -->
+        <div class="header">
+            <h1>安居房产中介</h1>
+            <div class="sub">—— 您身边的安家之选 ——</div>
+            <span class="divider"></span>
+        </div>
+
+        <!-- 导航 -->
+        <div class="nav">
+            <a class="active">首页</a>
+            <a onclick="openModal('about')">关于我们</a>
+            <a onclick="openModal('contact')">联系我们</a>
+        </div>
+
+        <!-- 欢迎语 -->
+        <div class="welcome">
+            <strong>安居房产</strong> 成立于2005年，十多年来服务本地居民超千户。
+            诚信经营，房源真实。欢迎来电咨询或亲临门店。
+        </div>
+
+        <!-- 房源列表 -->
+        <div class="section-title">▼ 热门房源推荐</div>
+        <table class="property-table">
+            <thead>
+                <tr><th>小区</th><th>户型</th><th>面积</th><th>价格</th><th>状态</th></tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><a class="prop-link" onclick="openModal('property')">永宁路18号·302室</a></td>
+                    <td>两室一厅</td><td>76㎡</td><td>12.8万</td>
+                    <td><span class="status-badge">在售</span></td>
+                </tr>
+                <tr>
+                    <td>建设路32号·501室</td>
+                    <td>三室两厅</td><td>98㎡</td><td>23.5万</td>
+                    <td><span class="status-badge status-sold">已售</span></td>
+                </tr>
+                <tr>
+                    <td>和平巷6号·203室</td>
+                    <td>一室一厅</td><td>45㎡</td><td>8.6万</td>
+                    <td><span class="status-badge">在售</span></td>
+                </tr>
+                <tr>
+                    <td>江陵大道85号·404室</td>
+                    <td>两室两厅</td><td>92㎡</td><td>19.2万</td>
+                    <td><span class="status-badge">在售</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 底部 -->
+        <div class="footer">
+            <span class="update">* 本网站最后更新：2022年3月</span>
+            <span class="whisper">— 江陵县 · 永宁路18号一楼 —</span>
+        </div>
+
+        <!-- ===== 模态框1：房源详情 ===== -->
+        <div class="modal-overlay" id="modal-property">
+            <div class="modal-box">
+                <button class="close-btn" onclick="closeModal('property')">✕</button>
+                <h2>永宁路18号 · 302室</h2>
+                <div class="photo-placeholder">
+                    <img src="images/room.jpg" alt="302室客厅" style="width:100%; height:100%; object-fit:cover;" />
+                </div>
+                <div class="photo-caption">[ 室内实拍 · 摄于2021年11月 ]</div>
+                <div class="detail-meta">
+                    <strong>位置：</strong>江陵县永宁路18号，3楼（共6层）<br />
+                    <strong>户型：</strong>两室一厅一卫，南北通透<br />
+                    <strong>面积：</strong>76㎡（套内62㎡）<br />
+                    <strong>年代：</strong>1998年建<br />
+                    <strong>价格：</strong>12.8万（可小刀）
+                </div>
+                <p style="font-size:14px; color:#4a3d30; line-height:1.9;">
+                    老城核心地段，步行5分钟到菜市场、10分钟到县医院。
+                    适合养老或刚需上车。房子已腾空，简单装修，拎包入住。
+                </p>
+                <div class="detail-footer">看房请联系中介 · 钥匙在店内</div>
+            </div>
+        </div>
+
+        <!-- ===== 模态框2：关于我们 ===== -->
+        <div class="modal-overlay" id="modal-about">
+            <div class="modal-box">
+                <button class="close-btn" onclick="closeModal('about')">✕</button>
+                <h2>我们的团队</h2>
+                <p style="font-size:14px; color:#5a4a38; margin-bottom:10px;">
+                    安居房产中介成立至今，感谢每一位员工的付出。
+                </p>
+                <div class="team-photo">
+                    <img src="images/team.jpg" alt="员工合影" style="width:100%; height:100%; object-fit:cover;" />
+                </div>
+                <div class="team-caption">
+                    左起：张伟（店长）、李婷、王芳、陈磊、苏晚（实习生）
+                    <span class="hint">｜ 摄于2021年7月</span>
+                </div>
+                <p style="font-size:13px; color:#8f7d66; margin-top:12px; line-height:1.8; text-align:center; border-top:1px solid #ddd0bf; padding-top:14px;">
+                    — 用心服务，真诚待客 —
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== 模态框3：联系我们 + 密码 ===== -->
+        <div class="modal-overlay" id="modal-contact">
+            <div class="modal-box">
+                <button class="close-btn" onclick="closeModal('contact')">✕</button>
+                <h2>联系我们</h2>
+                <div class="contact-info">
+                    <strong>地址：</strong>江陵县永宁路18号一楼（安居房产中介）<br />
+                    <strong>电话：</strong><span class="phone">0717-555-3847</span><br />
+                    <strong>营业：</strong>工作日 9:00 – 17:00
+                </div>
+                <div class="password-section">
+                    <label>🔑 在线看房预约 · 请输入看房密码</label>
+                    <div class="password-input-group">
+                        <input type="text" id="pwdInput" placeholder="请输入密码…" autocomplete="off" />
+                        <button onclick="checkPassword()">确认</button>
+                    </div>
+                    <div class="password-result" id="pwdResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

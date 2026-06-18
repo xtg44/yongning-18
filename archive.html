@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>江陵县档案馆 · 社区工作档案</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* ===== 档案馆专属样式 ===== */
+        .archive-wrapper {
+            max-width: 820px;
+            margin: 0 auto;
+            background: #f5efe6;
+            border: 1px solid #c9bbaa;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(60, 40, 20, 0.15);
+            font-family: "SimSun", "宋体", serif;
+            overflow: hidden;
+        }
+
+        /* 档案馆头部 */
+        .archive-header {
+            background: #4a3d30;
+            padding: 16px 28px;
+            border-bottom: 3px solid #8a7a6a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .archive-header .title {
+            color: #f7f2e6;
+            font-size: 20px;
+            font-weight: normal;
+            letter-spacing: 4px;
+        }
+
+        .archive-header .title span {
+            color: #c9a090;
+        }
+
+        .archive-header .badge {
+            color: #d6c9b8;
+            font-size: 12px;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.06);
+            padding: 4px 14px;
+            border-radius: 2px;
+        }
+
+        /* 档案主体 */
+        .archive-body {
+            padding: 24px 28px 30px;
+        }
+
+        /* 档案编号 */
+        .archive-ref {
+            font-size: 13px;
+            color: #8f7d66;
+            letter-spacing: 1px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e6ddcf;
+            margin-bottom: 18px;
+        }
+
+        .archive-ref strong {
+            color: #5a4a38;
+            font-weight: normal;
+        }
+
+        /* 档案卡片 */
+        .archive-card {
+            background: #fcf8f0;
+            border: 1px solid #d6c9b8;
+            padding: 20px 22px;
+            margin-bottom: 20px;
+        }
+
+        .archive-card .card-label {
+            font-size: 12px;
+            color: #8f7d66;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .archive-card .card-content {
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 2;
+        }
+
+        .archive-card .card-content strong {
+            color: #3d3228;
+        }
+
+        /* 扫描件区域 */
+        .scan-area {
+            margin: 16px 0 10px;
+            border: 2px solid #d6c9b8;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #fcf8f0;
+            position: relative;
+        }
+
+        .scan-area canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .scan-caption {
+            font-size: 12px;
+            color: #8f7d66;
+            text-align: right;
+            margin-top: -6px;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            padding-right: 4px;
+        }
+
+        /* 批注（红笔） */
+        .red-annotation {
+            background: rgba(180, 60, 50, 0.04);
+            border-left: 4px solid #8a3a2a;
+            padding: 14px 18px;
+            margin: 14px 0 6px;
+            font-size: 14px;
+            color: #5a2a1a;
+            line-height: 1.9;
+            font-family: "KaiTi", "楷体", "SimSun", serif;
+        }
+
+        .red-annotation .red-text {
+            color: #8a3a2a;
+            font-weight: bold;
+        }
+
+        .red-annotation .highlight-name {
+            color: #6a1a0a;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        /* 底部导航 */
+        .archive-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e6ddcf;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #f5efe6;
+        }
+
+        .archive-footer a {
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            padding: 2px 4px;
+        }
+
+        .archive-footer a:hover {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .archive-wrapper {
+                margin: 8px;
+                border-radius: 2px;
+            }
+            .archive-header {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .archive-header .title {
+                font-size: 17px;
+                letter-spacing: 2px;
+            }
+            .archive-body {
+                padding: 16px 16px 20px;
+            }
+            .archive-card {
+                padding: 14px 16px;
+            }
+            .archive-card .card-content {
+                font-size: 13px;
+            }
+            .red-annotation {
+                font-size: 13px;
+                padding: 12px 14px;
+            }
+            .archive-footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="archive-wrapper">
+        <!-- 档案馆头部 -->
+        <div class="archive-header">
+            <div class="title">📂 江陵县<span>档案馆</span></div>
+            <div class="badge">社区工作档案 · 2008年</div>
+        </div>
+
+        <!-- 档案主体 -->
+        <div class="archive-body">
+
+            <!-- 档案编号 -->
+            <div class="archive-ref">
+                <strong>案卷号：</strong> 2008-D-042 &nbsp;｜&nbsp; <strong>分类：</strong> 永宁社区 · 事件记录
+            </div>
+
+            <!-- 档案卡片 -->
+            <div class="archive-card">
+                <div class="card-label">▎ 事件概要</div>
+                <div class="card-content">
+                    <p><strong>时间：</strong>2008年6月18日</p>
+                    <p><strong>地点：</strong>永宁路18号 · 502室</p>
+                    <p><strong>事件：</strong>住户张秀兰（女，63岁）从阳台坠落身亡</p>
+                    <p><strong>处理情况：</strong>警方已介入，初步认定为意外坠楼。居委会协助家属处理后事。</p>
+                </div>
+            </div>
+
+            <!-- 扫描件图片 -->
+            <div class="scan-area">
+                <canvas id="scanCanvas" width="760" height="400"></canvas>
+            </div>
+            <div class="scan-caption">[ 居委会工作记录扫描件 · 2008年6月 ]</div>
+
+            <!-- ★ 红笔批注（关键线索） -->
+            <div class="red-annotation">
+                ✍️ 红笔批注：<br />
+                “又是18号？三年前修水管也死过一个民工。<br />
+                查一下这个 <span class="highlight-name">陈永宁</span> 到底是谁 —— 档案里找不到这个人。”
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="archive-footer">
+                <a href="history.html">← 返回苏晚的浏览器历史</a>
+                <a href="forum.html">📋 返回论坛</a>
+                <a href="index.html">🏠 安居中介首页</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // 绘制扫描件
+        (function() {
+            const canvas = document.getElementById('scanCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width,
+                h = canvas.height;
+
+            // 纸张底色（泛黄）
+            const grad = ctx.createLinearGradient(0, 0, w, h);
+            grad.addColorStop(0, '#f5ede2');
+            grad.addColorStop(0.5, '#efe6d8');
+            grad.addColorStop(1, '#e8ddce');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // 纸张纹理（细微噪点）
+            for (let i = 0; i < 600; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                const a = Math.random() * 0.06;
+                ctx.fillStyle = `rgba(160, 140, 120, ${a})`;
+                ctx.fillRect(x, y, 3, 3);
+            }
+
+            // 标题
+            ctx.fillStyle = '#4a3d30';
+            ctx.font = '16px "SimSun", serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('江陵县永宁社区居委会 · 工作记录', w / 2, 40);
+
+            // 分隔线
+            ctx.strokeStyle = '#c9bbaa';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(60, 50);
+            ctx.lineTo(w - 60, 50);
+            ctx.stroke();
+
+            // 正文
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#4a3d30';
+            ctx.font = '14px "SimSun", serif';
+            const lines = [
+                ['时间', '2008年6月18日'],
+                ['地点', '永宁路18号·502室'],
+                ['事件', '住户张秀兰（女，63岁）从阳台坠落，当场身亡。'],
+                ['处理', '警方已介入，初步认定为意外坠楼。居委会已协助家属处理后事。'],
+                ['备注', '该户为独居老人，家属已从外地赶回。']
+            ];
+
+            let yPos = 72;
+            lines.forEach(([label, value]) => {
+                ctx.fillStyle = '#4a3d30';
+                ctx.font = '13px "SimSun", serif';
+                ctx.fillText('【' + label + '】', 50, yPos);
+                ctx.fillStyle = '#3d3228';
+                ctx.font = '13px "SimSun", serif';
+                ctx.fillText(value, 160, yPos);
+                yPos += 28;
+            });
+
+            // 下方签名区
+            yPos += 12;
+            ctx.fillStyle = '#8f7d66';
+            ctx.font = '12px "SimSun", serif';
+            ctx.fillText('记录人：李桂芳（永宁社区居委会）', 50, yPos);
+            ctx.fillText('日期：2008年6月19日', 380, yPos);
+
+            // ★ 红笔批注（手写效果）
+            yPos += 40;
+            ctx.fillStyle = '#8a2a1a';
+            ctx.font = '15px "KaiTi", "楷体", serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('✍️ 又是18号？三年前修水管也死过一个民工。', 50, yPos);
+            yPos += 28;
+            ctx.fillStyle = '#8a2a1a';
+            ctx.font = 'bold 16px "KaiTi", "楷体", serif';
+            ctx.fillText('查一下这个“陈永宁”到底是谁 ——', 50, yPos);
+            yPos += 28;
+            ctx.fillStyle = '#8a2a1a';
+            ctx.font = '15px "KaiTi", "楷体", serif';
+            ctx.fillText('档案里找不到这个人。', 50, yPos);
+
+            // 批注下划线（模拟手画）
+            ctx.strokeStyle = 'rgba(138, 42, 26, 0.25)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(170, yPos - 4);
+            ctx.lineTo(330, yPos - 4);
+            ctx.stroke();
+
+            // 折痕效果
+            for (let i = 0; i < 5; i++) {
+                const x = 60 + Math.random() * (w - 120);
+                const y = 60 + Math.random() * (h - 120);
+                ctx.strokeStyle = `rgba(180, 160, 140, 0.05)`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + 40 + Math.random() * 80, y + 20 + Math.random() * 60);
+                ctx.stroke();
+            }
+
+            // 暗角
+            const vigGrad = ctx.createRadialGradient(w * 0.5, h * 0.4, w * 0.4, w * 0.5, h * 0.4, w * 0.8);
+            vigGrad.addColorStop(0, 'rgba(0,0,0,0)');
+            vigGrad.addColorStop(1, 'rgba(0,0,0,0.08)');
+            ctx.fillStyle = vigGrad;
+            ctx.fillRect(0, 0, w, h);
+        })();
+
+        console.log('%c📂 江陵县档案馆 · 2008年记录', 'font-size:18px; color:#5a4a38;');
+        console.log('%c🖊️ 注意看红笔批注。', 'font-size:13px; color:#8f7d66;');
+    </script>
+</body>
+</html>
