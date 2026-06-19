@@ -5,6 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>安居房产中介 · 江陵县</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+        /* 搜索栏样式 — 与整体风格统一 */
+        .search-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 16px;
+        }
+
+        .search-bar input {
+            padding: 4px 10px;
+            font-size: 13px;
+            font-family: "SimSun", "宋体", serif;
+            border: 2px solid #c9bbaa;
+            background: #fcf8f0;
+            color: #3d3228;
+            outline: none;
+            border-radius: 2px;
+            width: 130px;
+            transition: border-color 0.2s, width 0.3s;
+            height: 28px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .search-bar input:focus {
+            border-color: #8a7a6a;
+            width: 170px;
+        }
+
+        .search-bar input::placeholder {
+            color: #c9bbaa;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .search-bar button {
+            padding: 4px 10px;
+            font-size: 14px;
+            font-family: "SimSun", "宋体", serif;
+            background: #b8a68b;
+            color: #f7f2e6;
+            border: 2px solid #b8a68b;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            height: 28px;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .search-bar button:hover {
+            background: #8f7d66;
+            border-color: #8f7d66;
+        }
+
+        /* 搜索面板 */
+        .search-results {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            max-width: 420px;
+            width: 100%;
+            background: #f7f2e6;
+            border: 3px double #b8a68b;
+            border-radius: 4px;
+            padding: 18px 22px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            max-height: 60vh;
+            overflow-y: auto;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .search-results.show {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .search-results .result-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #3d3228;
+            border-bottom: 2px solid #ddd0bf;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .search-results .result-item {
+            font-size: 13px;
+            color: #4a3d30;
+            padding: 6px 0;
+            border-bottom: 1px solid #e6ddcf;
+            line-height: 1.9;
+        }
+
+        .search-results .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-results .result-item .highlight {
+            color: #8a3a2a;
+            font-weight: bold;
+        }
+
+        .search-results .result-item a {
+            color: #8a3a2a;
+            text-decoration: none;
+            border-bottom: 1px dashed #c9a090;
+            font-weight: bold;
+        }
+
+        .search-results .result-item a:hover {
+            color: #5a2018;
+            border-bottom-color: #5a2018;
+        }
+
+        .search-results .no-result {
+            font-size: 13px;
+            color: #8f7d66;
+            text-align: center;
+            padding: 16px 0;
+            line-height: 2;
+        }
+
+        .search-results .close-search {
+            position: absolute;
+            top: 6px;
+            right: 12px;
+            font-size: 18px;
+            color: #8f7d66;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: "SimSun", "宋体", serif;
+            transition: color 0.2s;
+            padding: 4px 8px;
+        }
+
+        .search-results .close-search:hover {
+            color: #4a3d30;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .search-bar {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 6px;
+            }
+            .search-bar input {
+                width: 100%;
+                flex: 1;
+            }
+            .search-bar input:focus {
+                width: 100%;
+            }
+            .search-results {
+                top: 70px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                width: auto;
+            }
+            .nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="site-wrapper">
@@ -15,11 +189,18 @@
             <span class="divider"></span>
         </div>
 
-        <!-- 导航 -->
+        <!-- 导航 + 搜索栏 -->
         <div class="nav">
-            <a class="active">首页</a>
-            <a onclick="openModal('about')">关于我们</a>
-            <a onclick="openModal('contact')">联系我们</a>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; width:100%;">
+                <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                    <a class="active">首页</a>
+                    <a onclick="openModal('about')">关于我们</a>
+                    <a onclick="openModal('contact')">联系我们</a>
+                </div>
+                <a href="search.html" style="color:#6a5a48; text-decoration:none; font-size:13px; border-bottom:2px solid transparent; transition:border-color 0.2s; padding:2px 4px; letter-spacing:1px;">
+                    🔍 检索
+                </a>
+            </div>
         </div>
 
         <!-- 欢迎语 -->
@@ -62,6 +243,7 @@
         <div class="footer">
             <span class="update">* 本网站最后更新：2022年3月</span>
             <span class="whisper">— 江陵县 · 永宁路18号一楼 —</span>
+            <span class="chat-trigger" onclick="openChat()" style="color:#d6c9b0; font-size:14px; letter-spacing:6px; cursor:pointer; user-select:none; display:block; margin-top:4px;">……</span>
         </div>
 
         <!-- ===== 模态框1：房源详情 ===== -->
@@ -81,7 +263,7 @@
                     <strong>价格：</strong>12.8万（可小刀）
                 </div>
                 <p style="font-size:14px; color:#4a3d30; line-height:1.9;">
-                    老城核心地段，步行5分钟到菜市场、10分钟到县医院。
+                    老城核心地段，步行5分钟到菜市场、10分钟到县医院。(4T)
                     适合养老或刚需上车。房子已腾空，简单装修，拎包入住。
                 </p>
                 <div class="detail-footer">看房请联系中介 · 钥匙在店内</div>
@@ -129,7 +311,27 @@
                 </div>
             </div>
         </div>
+
+        <!-- ===== 搜索面板 ===== -->
+        <div class="search-results" id="searchResults">
+            <button class="close-search" onclick="closeSearch()">✕</button>
+            <div class="result-title">🔍 搜索结果</div>
+            <div id="searchContent"></div>
+        </div>
+
     </div>
     <script src="script.js"></script>
+    <script>
+    // 检测 URL 参数，自动打开模态框
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const modal = params.get('modal');
+        if (modal === 'about') {
+            setTimeout(function() {
+                openModal('about');
+            }, 300);
+        }
+    })();
+</script>
 </body>
 </html>

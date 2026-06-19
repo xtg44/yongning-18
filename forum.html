@@ -6,7 +6,6 @@
     <title>江陵本地论坛 · 市民心声</title>
     <link rel="stylesheet" href="style.css" />
     <style>
-        /* ===== 论坛专属样式 ===== */
         .forum-wrapper {
             max-width: 860px;
             margin: 0 auto;
@@ -17,7 +16,6 @@
             font-family: "SimSun", "宋体", serif;
             overflow: hidden;
         }
-
         .forum-header {
             background: #4a3d30;
             padding: 14px 24px;
@@ -27,24 +25,18 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .forum-header .logo {
             color: #f7f2e6;
             font-size: 20px;
             letter-spacing: 4px;
             font-weight: normal;
         }
-
-        .forum-header .logo span {
-            color: #c9a090;
-        }
-
+        .forum-header .logo span { color: #c9a090; }
         .forum-header .nav-links {
             display: flex;
             gap: 20px;
             font-size: 13px;
         }
-
         .forum-header .nav-links a {
             color: #d6c9b8;
             text-decoration: none;
@@ -52,37 +44,28 @@
             border-bottom: 2px solid transparent;
             transition: border-color 0.2s, color 0.2s;
         }
-
         .forum-header .nav-links a:hover {
             border-bottom-color: #c9a090;
             color: #f7f2e6;
         }
-
         .forum-header .nav-links .active {
             border-bottom-color: #c9a090;
             color: #f7f2e6;
         }
-
         .forum-breadcrumb {
             padding: 12px 24px 8px;
             font-size: 12px;
             color: #8f7d66;
             border-bottom: 1px solid #e6ddcf;
         }
-
         .forum-breadcrumb a {
             color: #8f7d66;
             text-decoration: none;
         }
-
-        .forum-breadcrumb a:hover {
-            color: #4a3d30;
-        }
-
+        .forum-breadcrumb a:hover { color: #4a3d30; }
         .post-container {
             padding: 20px 24px 30px;
         }
-
         .post-title {
             font-size: 20px;
             color: #3d3228;
@@ -91,7 +74,6 @@
             margin-bottom: 6px;
             line-height: 1.4;
         }
-
         .post-meta {
             font-size: 12px;
             color: #8f7d66;
@@ -102,15 +84,8 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-
-        .post-meta .author {
-            color: #5a4a38;
-        }
-
-        .post-meta .time {
-            color: #aa9a88;
-        }
-
+        .post-meta .author { color: #5a4a38; }
+        .post-meta .time { color: #aa9a88; }
         .post-content {
             font-size: 14px;
             color: #4a3d30;
@@ -120,16 +95,11 @@
             border-left: 4px solid #c9bbaa;
             margin-bottom: 24px;
         }
-
-        .post-content strong {
-            color: #3d3228;
-        }
-
+        .post-content strong { color: #3d3228; }
         .post-content .highlight {
             color: #8a3a2a;
             font-weight: bold;
         }
-
         .reply-section-title {
             font-size: 14px;
             color: #5a4a38;
@@ -139,18 +109,15 @@
             font-weight: normal;
             letter-spacing: 2px;
         }
-
         .reply-section-title span {
             color: #8f7d66;
             font-size: 12px;
         }
-
         .reply-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .reply-item {
             padding: 14px 16px;
             border-bottom: 1px solid #e6ddcf;
@@ -159,74 +126,45 @@
             color: #4a3d30;
             transition: background 0.2s;
         }
-
         .reply-item:hover {
             background: rgba(200, 185, 165, 0.08);
         }
-
         .reply-item .reply-author {
             font-weight: bold;
             color: #5a4a38;
             font-size: 13px;
         }
-
         .reply-item .reply-time {
             font-size: 11px;
             color: #aa9a88;
             margin-left: 12px;
         }
-
         .reply-item .reply-body {
             margin-top: 4px;
             padding-left: 4px;
         }
-
         .reply-item .reply-body .highlight {
             color: #8a3a2a;
             font-weight: bold;
         }
-
         .reply-item.anonymous {
             background: rgba(180, 60, 50, 0.04);
             border-left: 3px solid #c9a090;
             padding-left: 20px;
         }
-
         .reply-item.anonymous .reply-author {
             color: #6a3a2a;
         }
-
-        /* 线索标记：点击后变色 + 打勾 */
         .clue-link {
             color: #8a3a2a;
             cursor: pointer;
             border-bottom: 1px dashed #c9a090;
-            transition: color 0.2s, border-color 0.2s;
-            display: inline-block;
+            transition: color 0.2s;
         }
-
         .clue-link:hover {
             color: #5a2018;
             border-bottom-color: #5a2018;
         }
-
-        .clue-link.marked {
-            color: #8f7d66;
-            border-bottom-color: #c9bbaa;
-            cursor: default;
-        }
-
-        .clue-link .checkmark {
-            display: none;
-            margin-left: 4px;
-            font-size: 12px;
-            color: #6a8a6a;
-        }
-
-        .clue-link.marked .checkmark {
-            display: inline;
-        }
-
         .forum-footer {
             padding: 16px 24px;
             border-top: 1px solid #e6ddcf;
@@ -236,7 +174,6 @@
             gap: 12px;
             background: #f5efe6;
         }
-
         .forum-footer a {
             color: #6a5a48;
             text-decoration: none;
@@ -245,50 +182,10 @@
             transition: border-color 0.2s, color 0.2s;
             padding: 2px 4px;
         }
-
         .forum-footer a:hover {
             border-bottom-color: #b8a68b;
             color: #3d3228;
         }
-
-        @media (max-width: 640px) {
-            .forum-wrapper {
-                margin: 8px;
-                border-radius: 2px;
-            }
-            .forum-header {
-                padding: 12px 16px;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .forum-header .logo {
-                font-size: 17px;
-            }
-            .forum-header .nav-links {
-                font-size: 12px;
-                gap: 12px;
-            }
-            .post-container {
-                padding: 14px 16px 20px;
-            }
-            .post-title {
-                font-size: 17px;
-            }
-            .post-content {
-                font-size: 13px;
-                padding: 12px 14px;
-            }
-            .reply-item {
-                font-size: 12px;
-                padding: 10px 12px;
-            }
-            .forum-footer {
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-            }
-        }
-
         .tag-hot {
             display: inline-block;
             background: #c9a090;
@@ -299,11 +196,21 @@
             margin-left: 8px;
             letter-spacing: 1px;
         }
+        @media (max-width: 640px) {
+            .forum-wrapper { margin: 8px; border-radius: 2px; }
+            .forum-header { padding: 12px 16px; flex-direction: column; align-items: flex-start; }
+            .forum-header .logo { font-size: 17px; }
+            .forum-header .nav-links { font-size: 12px; gap: 12px; }
+            .post-container { padding: 14px 16px 20px; }
+            .post-title { font-size: 17px; }
+            .post-content { font-size: 13px; padding: 12px 14px; }
+            .reply-item { font-size: 12px; padding: 10px 12px; }
+            .forum-footer { flex-direction: column; align-items: center; gap: 8px; }
+        }
     </style>
 </head>
 <body>
     <div class="forum-wrapper">
-        <!-- 论坛头部 -->
         <div class="forum-header">
             <div class="logo">江陵<span>·</span> 本地论坛</div>
             <div class="nav-links">
@@ -313,29 +220,20 @@
                 <a href="#">闲聊灌水</a>
             </div>
         </div>
-
-        <!-- 面包屑 -->
         <div class="forum-breadcrumb">
             <a href="#">江陵本地论坛</a> › <a href="#">市民心声</a> › 帖子正文
         </div>
-
-        <!-- 帖子内容 -->
         <div class="post-container">
-
-            <!-- 帖子标题 -->
             <h1 class="post-title">
                 【求助】老楼年年出事，有没有人管？
                 <span class="tag-hot">热帖</span>
             </h1>
-
             <div class="post-meta">
                 <span class="author">👤 江陵老住户</span>
                 <span class="time">📅 2022-01-15 14:32</span>
                 <span class="time">💬 23 回复</span>
                 <span class="time">👁️ 1.2k 浏览</span>
             </div>
-
-            <!-- 主帖内容 -->
             <div class="post-content">
                 <p>我住在永宁路18号对面那个小区，住了二十年了。</p>
                 <p>对面那栋楼真的邪门，隔几年就出事。我列一下我知道的：</p>
@@ -348,11 +246,9 @@
                 <p>我不知道有没有关系。有没有人知道内情的？跟我说说。</p>
             </div>
 
-            <!-- 回复区域 -->
             <div class="reply-section-title">
                 全部回复 <span>（23条）</span>
             </div>
-
             <ul class="reply-list">
                 <li class="reply-item">
                     <span class="reply-author">路过的人</span>
@@ -361,7 +257,6 @@
                         楼主说的那栋楼我路过几次，外观看起来确实挺旧的。但年年出事也太夸张了吧？是不是巧合啊？
                     </div>
                 </li>
-
                 <li class="reply-item anonymous">
                     <span class="reply-author">🔸 匿名用户</span>
                     <span class="reply-time">2022-01-15 16:20</span>
@@ -370,7 +265,6 @@
                         你知道的太多了，小心。
                     </div>
                 </li>
-
                 <li class="reply-item">
                     <span class="reply-author"><strong>江陵老住户</strong>（楼主）</span>
                     <span class="reply-time">2022-01-15 16:45</span>
@@ -378,17 +272,23 @@
                         回复 <strong>匿名用户</strong>：你什么意思？你知道什么内情？
                     </div>
                 </li>
-
                 <li class="reply-item anonymous">
                     <span class="reply-author">🔸 匿名用户</span>
                     <span class="reply-time">2022-01-15 17:02</span>
                     <div class="reply-body">
-                        我没什么意思。<br />
+                        我没什么意思。(2O)<br />
                         <span class="highlight">302那间房你别去查就行了。</span> 谁住302，谁倒霉。
                     </div>
                 </li>
-
-                <!-- 回复5：纯文本，无交互 -->
+                <!-- ★ 新增回复：指向档案馆 -->
+                <li class="reply-item">
+                    <span class="reply-author">江陵老住户</span>
+                    <span class="reply-time">2022-01-16 14:20</span>
+                    <div class="reply-body">
+                        我去社区查过，居委会那份记录上好像有人用红笔写了什么。<br />
+                        不过他们不让我拍照，只看到“陈永宁”三个字。
+                    </div>
+                </li>
                 <li class="reply-item">
                     <span class="reply-author">过路人</span>
                     <span class="reply-time">2022-01-16 09:13</span>
@@ -396,7 +296,6 @@
                         我听说 302的镜子后面有字，真的假的？
                     </div>
                 </li>
-
                 <li class="reply-item">
                     <span class="reply-author">县城小张</span>
                     <span class="reply-time">2022-01-16 10:45</span>
@@ -404,7 +303,6 @@
                         楼主要不你报警吧？在这发帖有什么用。不过我劝你一句，别管闲事。
                     </div>
                 </li>
-
                 <li class="reply-item">
                     <span class="reply-author">江陵老住户</span>
                     <span class="reply-time">2022-01-16 11:20</span>
@@ -412,7 +310,6 @@
                         回复 <strong>过路人</strong>：镜子？什么镜子？你说清楚。
                     </div>
                 </li>
-
                 <li class="reply-item">
                     <span class="reply-author">过路人</span>
                     <span class="reply-time">2022-01-16 11:35</span>
@@ -421,7 +318,6 @@
                         你要是真想知道，自己去看看呗。
                     </div>
                 </li>
-
                 <li class="reply-item">
                     <span class="reply-author">不信邪</span>
                     <span class="reply-time">2022-01-16 13:08</span>
@@ -435,26 +331,10 @@
             <div class="forum-footer">
                 <a href="history.html">← 返回苏晚的浏览器历史</a>
                 <a href="index.html">🏠 安居中介首页</a>
-                <a href="#" onclick="alert('📝 拿支笔，把线索记下来吧。')">📋 线索收集册</a>
+                <a href="#" onclick="alert('🔒 该页面仅对注册用户开放。')">发表回复 »</a>
             </div>
-
         </div>
     </div>
-
     <script src="script.js"></script>
-    <script>
-        // 线索标记函数：点击后变色 + 打勾，表示“已留意”
-        // 不显示任何额外信息，玩家需要自己记住这条线索
-        function markClue(el) {
-            if (!el.classList.contains('marked')) {
-                el.classList.add('marked');
-                // 轻反馈：只做视觉标记
-            }
-        }
-
-        // 控制台提示（无答案）
-        console.log('%c📋 江陵本地论坛 · 市民心声', 'font-size:18px; color:#5a4a38;');
-        console.log('%c💡 仔细看回复，把有用的线索记下来。', 'font-size:13px; color:#8f7d66;');
-    </script>
 </body>
 </html>

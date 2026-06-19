@@ -6,7 +6,6 @@
     <title>江陵县新闻 · 陈永宁失踪事件</title>
     <link rel="stylesheet" href="style.css" />
     <style>
-        /* ===== 新闻页面专属样式 ===== */
         .news-wrapper {
             max-width: 780px;
             margin: 0 auto;
@@ -17,8 +16,6 @@
             font-family: "SimSun", "宋体", serif;
             overflow: hidden;
         }
-
-        /* 新闻头部 */
         .news-header {
             background: #3d3228;
             padding: 16px 28px;
@@ -29,18 +26,13 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .news-header .title {
             color: #f7f2e6;
             font-size: 18px;
             font-weight: normal;
             letter-spacing: 4px;
         }
-
-        .news-header .title span {
-            color: #c9a090;
-        }
-
+        .news-header .title span { color: #c9a090; }
         .news-header .date-badge {
             color: #d6c9b8;
             font-size: 12px;
@@ -49,13 +41,9 @@
             border-radius: 2px;
             letter-spacing: 1px;
         }
-
-        /* 新闻主体 */
         .news-body {
             padding: 24px 28px 30px;
         }
-
-        /* 文章标题 */
         .article-title {
             font-size: 22px;
             color: #3d3228;
@@ -64,7 +52,6 @@
             line-height: 1.4;
             margin-bottom: 6px;
         }
-
         .article-meta {
             font-size: 12px;
             color: #8f7d66;
@@ -75,34 +62,22 @@
             flex-wrap: wrap;
             gap: 16px;
         }
-
-        .article-meta .source {
-            color: #5a4a38;
-        }
-
-        /* 文章内容 */
+        .article-meta .source { color: #5a4a38; }
         .article-content {
             font-size: 14px;
             color: #4a3d30;
             line-height: 2.2;
         }
-
-        .article-content p {
-            margin-bottom: 12px;
-        }
-
+        .article-content p { margin-bottom: 12px; }
         .article-content .highlight {
             color: #8a3a2a;
             font-weight: bold;
         }
-
         .article-content .highlight-name {
             color: #6a1a0a;
             font-weight: bold;
             font-size: 15px;
         }
-
-        /* 寻人启事框 */
         .missing-box {
             background: rgba(180, 60, 50, 0.04);
             border: 2px solid #c9a090;
@@ -110,7 +85,6 @@
             margin: 18px 0 20px;
             border-radius: 2px;
         }
-
         .missing-box .box-title {
             font-size: 16px;
             color: #6a3a2a;
@@ -119,44 +93,42 @@
             text-align: center;
             margin-bottom: 10px;
         }
-
         .missing-box .box-content {
             font-size: 14px;
             color: #4a3d30;
             line-height: 2.2;
         }
-
-        .missing-box .box-content strong {
-            color: #3d3228;
-        }
-
-        /* 年份时间线 */
+        .missing-box .box-content strong { color: #3d3228; }
         .timeline {
             margin: 18px 0 14px;
             padding: 16px 20px;
             background: #fcf8f0;
             border-left: 4px solid #8a3a2a;
         }
-
         .timeline .tl-item {
             font-size: 14px;
             color: #4a3d30;
             line-height: 2.2;
             padding: 4px 0;
         }
-
         .timeline .tl-item .year {
             color: #8a3a2a;
             font-weight: bold;
             margin-right: 8px;
         }
-
         .timeline .tl-item .red-text {
             color: #6a1a0a;
             font-weight: bold;
         }
-
-        /* 底部导航 */
+        /* 指向blog的暗示 */
+        .news-hint {
+            color: #6a5a48;
+            font-size: 13px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #ddd0bf;
+            line-height: 1.8;
+        }
         .news-footer {
             padding: 16px 24px;
             border-top: 1px solid #e6ddcf;
@@ -166,7 +138,6 @@
             gap: 12px;
             background: #f5efe6;
         }
-
         .news-footer a {
             color: #6a5a48;
             text-decoration: none;
@@ -175,98 +146,43 @@
             transition: border-color 0.2s, color 0.2s;
             padding: 2px 4px;
         }
-
         .news-footer a:hover {
             border-bottom-color: #b8a68b;
             color: #3d3228;
         }
-
-        /* 响应式 */
         @media (max-width: 640px) {
-            .news-wrapper {
-                margin: 8px;
-                border-radius: 2px;
-            }
-            .news-header {
-                padding: 12px 16px;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .news-header .title {
-                font-size: 16px;
-                letter-spacing: 2px;
-            }
-            .news-body {
-                padding: 16px 16px 20px;
-            }
-            .article-title {
-                font-size: 18px;
-            }
-            .article-content {
-                font-size: 13px;
-            }
-            .missing-box {
-                padding: 14px 16px;
-            }
-            .missing-box .box-content {
-                font-size: 13px;
-            }
-            .timeline {
-                padding: 12px 16px;
-            }
-            .timeline .tl-item {
-                font-size: 13px;
-            }
-            .news-footer {
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-            }
+            .news-wrapper { margin: 8px; border-radius: 2px; }
+            .news-header { padding: 12px 16px; flex-direction: column; align-items: flex-start; }
+            .news-header .title { font-size: 16px; letter-spacing: 2px; }
+            .news-body { padding: 16px 16px 20px; }
+            .article-title { font-size: 18px; }
+            .article-content { font-size: 13px; }
+            .missing-box { padding: 14px 16px; }
+            .missing-box .box-content { font-size: 13px; }
+            .timeline { padding: 12px 16px; }
+            .timeline .tl-item { font-size: 13px; }
+            .news-footer { flex-direction: column; align-items: center; gap: 8px; }
         }
     </style>
 </head>
 <body>
     <div class="news-wrapper">
-        <!-- 新闻头部 -->
         <div class="news-header">
             <div class="title">📰 江陵县<span>新闻</span></div>
             <div class="date-badge">2008年3月12日 · 社会版</div>
         </div>
-
-        <!-- 新闻主体 -->
         <div class="news-body">
-
-            <!-- 文章标题 -->
             <h1 class="article-title">【寻人启事】陈永宁，男，1980年生，江陵县人</h1>
-
             <div class="article-meta">
                 <span class="source">📌 来源：江陵县新闻 · 社会版</span>
                 <span>📅 2008年3月12日</span>
                 <span>📄 第A08版</span>
             </div>
-
-            <!-- 文章内容 -->
             <div class="article-content">
-
-                <p>
-                    本报受家属委托，再次刊登寻人启事。
-                </p>
-
-                <p>
-                    <span class="highlight-name">陈永宁</span>，男，1980年出生，江陵县人。
-                    身高172cm，失踪时18岁。
-                </p>
-
-                <p>
-                    <strong>1998年5月</strong>，陈永宁在江陵县永宁路一处在建工地打工期间失踪。
-                    家属反映，失踪前无异常，未与家人发生矛盾。
-                </p>
-
-                <p>
-                    如有知情者，请联系陈建国，电话：0717-5XX-XXXX，重谢。
-                </p>
-
-                <!-- 寻人启事框 -->
+                <p>本报受家属委托，再次刊登寻人启事。</p>
+                <p><span class="highlight-name">陈永宁</span>，男，1980年出生，江陵县人。身高172cm，失踪时18岁。</p>
+                <p><strong>1998年5月</strong>，陈永宁在江陵县永宁路一处在建工地打工期间失踪。家属反映，失踪前无异常，未与家人发生矛盾。(1L)</p>
+                <p>如有知情者，请联系陈建国，电话：0717-5XX-XXXX，重谢。</p>
                 <div class="missing-box">
                     <div class="box-title">🔍 寻人启事</div>
                     <div class="box-content">
@@ -279,12 +195,9 @@
                         <p><strong>联系人：</strong>陈建国（父亲）</p>
                     </div>
                 </div>
-
                 <p style="color:#8f7d66; font-size:13px; margin-top:6px;">
                     ※ 备注：该启事自1998年起每年刊登一次，已连续刊登十年。陈永宁至今下落不明。
                 </p>
-
-                <!-- 时间线 -->
                 <div class="timeline">
                     <div class="tl-item">
                         <span class="year">1998年</span>
@@ -299,28 +212,22 @@
                         寻人启事刊登十年。同一年，<span class="red-text">502室张秀兰坠楼</span>。
                     </div>
                 </div>
-
+                <!-- ★ 新增暗示：指向 blog.html -->
+                <div class="news-hint">
+                    ※ 有读者反映，302室的前租客曾在网上详细记录过这栋楼的异常情况。<br />
+                    该博客已停更，但内容可能仍可查阅。
+                </div>
                 <p style="color:#8f7d66; font-size:13px; margin-top:10px; border-top:1px solid #e6ddcf; padding-top:14px;">
                     ⚠️ 本报将继续关注此事件。如有线索，请与家属或警方联系。
                 </p>
-
             </div>
-
-            <!-- 底部导航 -->
             <div class="news-footer">
-                <a href="history.html">← 返回苏晚的浏览器历史</a>
-                <a href="archive.html">📂 档案馆</a>
+                <a href="archive.html">← 返回档案馆</a>
+                <a href="history.html">📋 苏晚的搜索记录</a>
                 <a href="index.html">🏠 安居中介首页</a>
             </div>
-
         </div>
     </div>
-
     <script src="script.js"></script>
-    <script>
-        console.log('%c📰 江陵县新闻 · 陈永宁失踪', 'font-size:18px; color:#5a4a38;');
-        console.log('%c⏳ 注意时间线：1998年失踪，2008年仍未找到。', 'font-size:13px; color:#8f7d66;');
-        console.log('%c   “永宁路”这个名字……从1998年就有了。', 'font-size:13px; color:#8f7d66;');
-    </script>
 </body>
 </html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>搜索 · 安居档案</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .search-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            background: #f7f2e6;
+            border: 4px double #b8a68b;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.25);
+            min-height: 70vh;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .search-header {
+            border-bottom: 3px double #b8a68b;
+            padding-bottom: 14px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-header h1 {
+            font-size: 22px;
+            font-weight: normal;
+            color: #5a4a38;
+            letter-spacing: 4px;
+        }
+
+        .search-header a {
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+            padding: 2px 4px;
+        }
+
+        .search-header a:hover {
+            border-bottom-color: #b8a68b;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-family: "SimSun", "宋体", serif;
+            border: 2px solid #c9bbaa;
+            background: #fcf8f0;
+            color: #3d3228;
+            outline: none;
+            border-radius: 2px;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #8a7a6a;
+        }
+
+        .search-box input::placeholder {
+            color: #c9bbaa;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .search-box button {
+            padding: 8px 24px;
+            font-size: 14px;
+            font-family: "SimSun", "宋体", serif;
+            background: #b8a68b;
+            color: #f7f2e6;
+            border: 2px solid #b8a68b;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            letter-spacing: 3px;
+        }
+
+        .search-box button:hover {
+            background: #8f7d66;
+            border-color: #8f7d66;
+        }
+
+        .result-area {
+            border-top: 2px solid #ddd0bf;
+            padding-top: 18px;
+            min-height: 120px;
+        }
+
+        .result-area .no-result {
+            color: #8f7d66;
+            text-align: center;
+            padding: 24px 0;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .result-item {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e6ddcf;
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 1.8;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item .source {
+            color: #8f7d66;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .result-item .title {
+            font-weight: bold;
+            color: #3d3228;
+        }
+
+        .result-item a {
+            color: #8a3a2a;
+            text-decoration: none;
+            border-bottom: 1px dashed #c9a090;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .result-item a:hover {
+            color: #5a2018;
+            border-bottom-color: #5a2018;
+        }
+
+        @media (max-width: 640px) {
+            .search-wrapper {
+                padding: 20px 16px;
+                margin: 10px;
+            }
+            .search-header h1 {
+                font-size: 18px;
+            }
+            .search-box {
+                flex-direction: column;
+            }
+            .search-box button {
+                padding: 8px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-wrapper">
+        <div class="search-header">
+            <h1>📂 安居档案 · 检索</h1>
+            <a href="index.html">← 返回首页</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="输入关键词…" onkeydown="if(event.key==='Enter') doSearch()" />
+            <button onclick="doSearch()">检索</button>
+        </div>
+
+        <div class="result-area" id="resultArea">
+            <div class="no-result">输入关键词，开始检索。</div>
+        </div>
+    </div>
+
+    <script>
+        // 搜索数据库
+        // private: true 表示该条目仅在苏晚的搜索记录中可见，全局搜索不可查
+        const searchDB = [
+            // === 公开内容（全局可搜） ===
+            { keywords: ['张伟', '店长', '安居中介老板'], source: '安居中介', title: '关于我们·员工合影', link: 'index.html?modal=about', private: false },
+            { keywords: ['302', '302室', '永宁路18号302'], source: '安居中介', title: '永宁路18号·302室', link: 'index.html', private: false },
+            { keywords: ['永宁路18号', '18号', '永宁路'], source: '本地论坛', title: '老楼年年出事，有没有人管？', link: 'forum.html', private: false },
+            { keywords: ['坠楼', '2008', '张秀兰', '502室'], source: '江陵县档案馆', title: '2008年·502室坠楼记录', link: 'archive.html', private: false },
+            { keywords: ['2015', '203室'], source: '本地论坛', title: '203室租客死亡事件', link: 'forum.html', private: false },
+            { keywords: ['2022', '赵明礼', '401室'], source: '本地论坛', title: '401室老爷子去世', link: 'forum.html', private: false },
+            { keywords: ['陈永宁', '永宁'], source: '江陵县新闻', title: '陈永宁失踪事件', link: 'news.html', private: false },
+            { keywords: ['陈建国', '开发商', '父亲'], source: '江陵县新闻', title: '开发商陈建国的寻人启事', link: 'news.html', private: false },
+            { keywords: ['1998', '失踪', '工地', '施工'], source: '江陵县新闻', title: '1998年工地失踪事件', link: 'news.html', private: false },
+
+            // === 私密内容（仅苏晚的搜索记录可见，全局搜索不可查） ===
+            { keywords: ['苏晚', '小晚', '实习生'], source: '前租客博客', title: '302室住户记录', link: 'blog.html', private: true },
+            { keywords: ['李秀芬', '陈永宁母亲', '母亲'], source: '302室镜像', title: '镜子背后的署名', link: 'blog.html', private: true },
+            { keywords: ['镜子', '风水', '禁忌', '镜子后面'], source: '前租客博客', title: '302室的镜子与墙上的字', link: 'blog.html', private: true },
+            { keywords: ['诅咒', '红笔', '文字'], source: '前租客博客', title: '镜子后面的诅咒文字', link: 'blog.html', private: true },
+            { keywords: ['日记', '苏晚日记'], source: '苏晚的搜索记录', title: '苏晚的浏览器历史', link: 'history.html', private: true },
+            { keywords: ['钥匙', '铜钥匙'], source: '苏晚的搜索记录', title: '铜钥匙与匿名快递', link: 'history.html', private: true },
+            { keywords: ['密码', '看房密码'], source: '安居中介', title: '在线看房密码', link: 'index.html', private: true },
+        ];
+
+        function doSearch() {
+            const input = document.getElementById('searchInput');
+            const area = document.getElementById('resultArea');
+            const query = input.value.trim().toLowerCase();
+
+            if (!query) {
+                area.innerHTML = '<div class="no-result">请输入关键词。</div>';
+                return;
+            }
+
+            const matched = [];
+            for (const item of searchDB) {
+                // 跳过私密条目
+                if (item.private) continue;
+
+                for (const kw of item.keywords) {
+                    if (kw.toLowerCase().includes(query) || query.includes(kw.toLowerCase())) {
+                        matched.push(item);
+                        break;
+                    }
+                }
+            }
+
+            if (matched.length === 0) {
+                area.innerHTML = `<div class="no-result">⚠️ 没有找到与“${input.value}”相关的线索。</div>`;
+                return;
+            }
+
+            let html = '';
+            for (const item of matched) {
+                html += `
+                    <div class="result-item">
+                        <span class="source">${item.source}</span>
+                        ——
+                        <a href="${item.link}">${item.title}</a>
+                    </div>
+                `;
+            }
+            area.innerHTML = html;
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') doSearch();
+        });
+
+        document.getElementById('searchInput').focus();
+    </script>
+</body>
+</html>
