@@ -165,32 +165,31 @@
             color: #3d3228;
         }
 
-        /* ===== 隐形线索：放在底部，与背景同色，极小字 ===== */
+        /* ===== 隐形线索 ===== */
         .hidden-clue {
-            text-align: center;
-            color: #fcf8f0;
-            font-size: 10px;
+            display: block;
+            margin-top: 2px;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            font-size: 13px;
             letter-spacing: 2px;
             font-family: "SimSun", "宋体", serif;
             user-select: text;
             -webkit-user-select: text;
             -moz-user-select: text;
-            padding: 2px 0;
-            margin-top: 4px;
             background: transparent;
-            border: none;
-            outline: none;
-            caret-color: transparent;
             cursor: default;
         }
 
         .hidden-clue::selection {
-            background: rgba(138, 42, 26, 0.3);
             color: #8a3a2a;
+            -webkit-text-fill-color: #8a3a2a;
+            background: rgba(138, 42, 26, 0.15);
         }
+
         .hidden-clue::-moz-selection {
-            background: rgba(138, 42, 26, 0.3);
             color: #8a3a2a;
+            background: rgba(138, 42, 26, 0.15);
         }
 
         @media (max-width: 640px) {
@@ -278,6 +277,7 @@
                     <p style="color:#8f7d66; font-size:12px; margin-top:6px;">（博主再未更新）</p>
                     <p style="color:#8f7d66; font-size:12px; margin-top:12px; border-top:1px solid #e6ddcf; padding-top:12px;">
                         —— 门牌号，就是钥匙。
+                        <span class="hidden-clue">请做出选择——302.html</span>
                     </p>
                 </div>
             </div>
@@ -305,9 +305,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- ===== 隐形线索：放在评论区最底部 ===== -->
-            <div class="hidden-clue">请做出选择——302.html</div>
 
             <div class="blog-footer">
                 <a href="news.html">← 返回新闻</a>
