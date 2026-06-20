@@ -183,27 +183,30 @@
     <script>
         // 搜索数据库
         // private: true 表示该条目仅在苏晚的搜索记录中可见，全局搜索不可查
-        const searchDB = [
-            // === 公开内容（全局可搜） ===
-            { keywords: ['张伟', '店长', '安居中介老板'], source: '安居中介', title: '关于我们·员工合影', link: 'index.html?modal=about', private: false },
-            { keywords: ['302', '302室', '永宁路18号302'], source: '安居中介', title: '永宁路18号·302室', link: 'index.html', private: false },
-            { keywords: ['永宁路18号', '18号', '永宁路'], source: '本地论坛', title: '老楼年年出事，有没有人管？', link: 'forum.html', private: false },
-            { keywords: ['坠楼', '2008', '张秀兰', '502室'], source: '江陵县档案馆', title: '2008年·502室坠楼记录', link: 'archive.html', private: false },
-            { keywords: ['2015', '203室'], source: '本地论坛', title: '203室租客死亡事件', link: 'forum.html', private: false },
-            { keywords: ['2022', '赵明礼', '401室'], source: '本地论坛', title: '401室老爷子去世', link: 'forum.html', private: false },
-            { keywords: ['陈永宁', '永宁'], source: '江陵县新闻', title: '陈永宁失踪事件', link: 'news.html', private: false },
-            { keywords: ['陈建国', '开发商', '父亲'], source: '江陵县新闻', title: '开发商陈建国的寻人启事', link: 'news.html', private: false },
-            { keywords: ['1998', '失踪', '工地', '施工'], source: '江陵县新闻', title: '1998年工地失踪事件', link: 'news.html', private: false },
+const searchDB = [
+    // === 公开内容（全局可搜） ===
+    { keywords: ['张伟', '店长', '安居中介老板'], source: '安居中介', title: '关于我们·员工合影', link: 'index.html?modal=about', private: false },
+    { keywords: ['302', '302室', '永宁路18号302'], source: '安居中介', title: '永宁路18号·302室', link: 'index.html', private: false },
+    { keywords: ['永宁路18号', '18号', '永宁路'], source: '本地论坛', title: '老楼年年出事，有没有人管？', link: 'forum.html', private: false },
+    // 2005年坠楼
+    { keywords: ['坠楼', '2005', '张秀兰', '502室'], source: '江陵县档案馆', title: '2005年·502室坠楼记录', link: 'archive.html', private: false },
+    // 2012年死亡
+    { keywords: ['2012', '203室', '王海'], source: '本地论坛', title: '203室租客死亡事件（2012年）', link: 'forum.html', private: false },
+    // 2019年死亡
+    { keywords: ['2019', '赵明礼', '401室'], source: '本地论坛', title: '401室老爷子去世（2019年）', link: 'forum.html', private: false },
+    { keywords: ['陈永宁', '永宁'], source: '江陵县新闻', title: '陈永宁失踪事件（1998-2005）', link: 'news.html', private: false },
+    { keywords: ['陈建国', '开发商', '父亲'], source: '江陵县新闻', title: '开发商陈建国的寻人启事', link: 'news.html', private: false },
+    { keywords: ['1998', '失踪', '工地', '施工'], source: '江陵县新闻', title: '1998年工地失踪事件', link: 'news.html', private: false },
 
-            // === 私密内容（仅苏晚的搜索记录可见，全局搜索不可查） ===
-            { keywords: ['苏晚', '小晚', '实习生'], source: '前租客博客', title: '302室住户记录', link: 'blog.html', private: true },
-            { keywords: ['李秀芬', '陈永宁母亲', '母亲'], source: '302室镜像', title: '镜子背后的署名', link: 'blog.html', private: true },
-            { keywords: ['镜子', '风水', '禁忌', '镜子后面'], source: '前租客博客', title: '302室的镜子与墙上的字', link: 'blog.html', private: true },
-            { keywords: ['诅咒', '红笔', '文字'], source: '前租客博客', title: '镜子后面的诅咒文字', link: 'blog.html', private: true },
-            { keywords: ['日记', '苏晚日记'], source: '苏晚的搜索记录', title: '苏晚的浏览器历史', link: 'history.html', private: true },
-            { keywords: ['钥匙', '铜钥匙'], source: '苏晚的搜索记录', title: '铜钥匙与匿名快递', link: 'history.html', private: true },
-            { keywords: ['密码', '看房密码'], source: '安居中介', title: '在线看房密码', link: 'index.html', private: true },
-        ];
+    // === 私密内容（全局搜索不可查） ===
+    { keywords: ['苏晚', '小晚', '实习生'], source: '前租客博客', title: '302室住户记录', link: 'blog.html', private: true },
+    { keywords: ['李秀芬', '陈永宁母亲', '母亲'], source: '302室镜像', title: '镜子背后的署名', link: 'blog.html', private: true },
+    { keywords: ['镜子', '风水', '禁忌', '镜子后面'], source: '前租客博客', title: '302室的镜子与墙上的字', link: 'blog.html', private: true },
+    { keywords: ['诅咒', '红笔', '文字'], source: '前租客博客', title: '镜子后面的诅咒文字', link: 'blog.html', private: true },
+    { keywords: ['日记', '苏晚日记'], source: '苏晚的搜索记录', title: '苏晚的浏览器历史', link: 'history.html', private: true },
+    { keywords: ['钥匙', '铜钥匙'], source: '苏晚的搜索记录', title: '铜钥匙与匿名快递', link: 'history.html', private: true },
+    { keywords: ['密码', '看房密码'], source: '安居中介', title: '在线看房密码', link: 'index.html', private: true },
+];
 
         function doSearch() {
             const input = document.getElementById('searchInput');
