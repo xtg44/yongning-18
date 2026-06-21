@@ -432,5 +432,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 如果玩家已经看过，立即显示
 updateConsoleEntry();
-
-console.log('%c🔍 提示：查看“联系我们”后，底部会出现“控制台”入口。', 'font-size:13px; color:#8f7d66;');
