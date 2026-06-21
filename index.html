@@ -2,282 +2,812 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>安居房产中介 · 江陵县</title>
-    <link rel="stylesheet" href="style.css" />
     <style>
-        .search-bar {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-left: 16px;
+        /* ===== 全局重置 & 复古基调 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .search-bar input {
-            padding: 4px 10px;
+        body {
+            background: #d6c9b0;
+            font-family: "SimSun", "宋体", "Times New Roman", serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .site-wrapper {
+            max-width: 880px;
+            width: 100%;
+            background: #f7f2e6;
+            background-image:
+                radial-gradient(ellipse at 30% 20%, rgba(200, 180, 150, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(180, 160, 130, 0.06) 0%, transparent 50%);
+            border: 4px double #b8a68b;
+            border-radius: 4px;
+            padding: 36px 42px 28px;
+            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.25), inset 0 1px 0 rgba(255, 248, 235, 0.6);
+            position: relative;
+        }
+
+        .site-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(180, 160, 130, 0.03) 2px,
+                    rgba(180, 160, 130, 0.03) 4px);
+            pointer-events: none;
+            border-radius: 4px;
+        }
+
+        /* ===== 页眉 ===== */
+        .header {
+            border-bottom: 3px double #b8a68b;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: normal;
+            color: #5a4a38;
+            letter-spacing: 8px;
+            text-shadow: 0 1px 0 #ede6d8;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .header .sub {
+            font-size: 14px;
+            color: #8f7d66;
+            letter-spacing: 4px;
+            margin-top: 4px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .header .divider {
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: #c9bbaa;
+            margin: 10px auto 0;
+        }
+
+        /* ===== 导航 ===== */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            font-size: 15px;
+            padding: 10px 0 14px;
+            border-bottom: 1px solid #ddd0bf;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: #6a5a48;
+            text-decoration: none;
+            padding: 2px 8px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+            cursor: pointer;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 1px;
+        }
+
+        .nav a:hover {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+        }
+
+        .nav .active {
+            border-bottom-color: #b8a68b;
+            color: #3d3228;
+            font-weight: bold;
+        }
+
+        /* ===== 欢迎语 ===== */
+        .welcome {
+            font-size: 14px;
+            color: #5a4a38;
+            line-height: 1.9;
+            margin-bottom: 24px;
+            padding: 12px 18px;
+            background: rgba(200, 185, 165, 0.2);
+            border-left: 4px solid #c9bbaa;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .welcome strong {
+            color: #3d3228;
+        }
+
+        /* ===== 房源表格 ===== */
+        .section-title {
+            font-size: 18px;
+            color: #5a4a38;
+            font-weight: normal;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 28px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .property-table th {
+            background: #e6ddcf;
+            color: #4a3d30;
+            font-weight: normal;
+            padding: 10px 8px;
+            border: 1px solid #c9bbaa;
+            letter-spacing: 2px;
             font-size: 13px;
+        }
+
+        .property-table td {
+            padding: 10px 8px;
+            border: 1px solid #d6c9b8;
+            color: #4a3d30;
+            background: #fcf8f0;
+        }
+
+        .property-table tr:hover td {
+            background: #f5efe6;
+        }
+
+        .highlight-row td {
+            background: #f5ede2 !important;
+            border-color: #b8a68b;
+        }
+
+        .highlight-row .prop-link {
+            color: #8a3a2a;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid #c9a090;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .highlight-row .prop-link:hover {
+            color: #5a2018;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #8a3a2a;
+            color: #f7f2e6;
+            font-size: 11px;
+            padding: 2px 10px;
+            letter-spacing: 1px;
+            border-radius: 2px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .status-sold {
+            background: #7a8a7a;
+        }
+
+        /* ===== 底部 ===== */
+        .footer {
+            border-top: 2px solid #ddd0bf;
+            padding-top: 18px;
+            margin-top: 6px;
+            font-size: 13px;
+            color: #8f7d66;
+            text-align: center;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .footer .update {
+            color: #aa9a88;
+            font-size: 12px;
+        }
+
+        .footer .whisper {
+            display: block;
+            font-size: 11px;
+            color: #c9bbaa;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+
+        /* ===== 模态框通用 ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 22, 16, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-box {
+            background: #f7f2e6;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px 36px;
+            border: 4px double #b8a68b;
+            border-radius: 4px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .modal-box .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 24px;
+            color: #8f7d66;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            font-family: "SimSun", "宋体", serif;
+            line-height: 1;
+        }
+
+        .modal-box .close-btn:hover {
+            color: #4a3d30;
+        }
+
+        .modal-box h2 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #5a4a38;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #ddd0bf;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .modal-box p,
+        .modal-box li {
+            font-size: 14px;
+            line-height: 1.9;
+            color: #4a3d30;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .modal-box ul {
+            padding-left: 20px;
+            margin: 8px 0 12px;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: #2c241c;
+            border-radius: 2px;
+            margin: 14px 0 16px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #b8a68b;
+        }
+
+        .photo-placeholder canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .photo-caption {
+            font-size: 12px;
+            color: #8f7d66;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .detail-meta {
+            font-size: 13px;
+            color: #6a5a48;
+            line-height: 2;
+            background: rgba(200, 185, 165, 0.15);
+            padding: 10px 14px;
+            border-left: 3px solid #c9bbaa;
+            margin: 10px 0 14px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .detail-meta strong {
+            color: #4a3d30;
+        }
+
+        .detail-footer {
+            font-size: 12px;
+            color: #aa9a88;
+            margin-top: 14px;
+            border-top: 1px solid #ddd0bf;
+            padding-top: 12px;
+            text-align: right;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .team-photo {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #d6c9b8;
+            border-radius: 2px;
+            margin: 12px 0 14px;
+            border: 1px solid #b8a68b;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .team-photo canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .team-caption {
+            font-size: 13px;
+            color: #5a4a38;
+            text-align: center;
+            line-height: 1.8;
+            font-family: "SimSun", "宋体", serif;
+            padding: 4px 0;
+        }
+
+        .team-caption .hint {
+            color: #8f7d66;
+            font-size: 12px;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: #4a3d30;
+            line-height: 2.2;
+            margin-bottom: 16px;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        .contact-info .phone {
+            color: #6a3a2a;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .password-section {
+            border-top: 2px solid #ddd0bf;
+            padding-top: 18px;
+            margin-top: 6px;
+        }
+
+        .password-section label {
+            font-size: 14px;
+            color: #4a3d30;
+            display: block;
+            margin-bottom: 8px;
+            font-family: "SimSun", "宋体", serif;
+            letter-spacing: 1px;
+        }
+
+        .password-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .password-input-group input {
+            flex: 1;
+            min-width: 120px;
+            padding: 8px 14px;
+            font-size: 14px;
             font-family: "SimSun", "宋体", serif;
             border: 2px solid #c9bbaa;
             background: #fcf8f0;
             color: #3d3228;
             outline: none;
+            transition: border-color 0.3s;
             border-radius: 2px;
-            width: 130px;
-            transition: border-color 0.2s, width 0.3s;
-            height: 28px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
         }
 
-        .search-bar input:focus {
-            border-color: #8a7a6a;
-            width: 170px;
+        .password-input-group input:focus {
+            border-color: #8f7d66;
         }
 
-        .search-bar input::placeholder {
-            color: #c9bbaa;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        .search-bar button {
-            padding: 4px 10px;
+        .password-input-group button {
+            padding: 8px 24px;
             font-size: 14px;
             font-family: "SimSun", "宋体", serif;
             background: #b8a68b;
             color: #f7f2e6;
-            border: 2px solid #b8a68b;
+            border: none;
             border-radius: 2px;
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-            height: 28px;
-            line-height: 1;
-            letter-spacing: 1px;
-        }
-
-        .search-bar button:hover {
-            background: #8f7d66;
-            border-color: #8f7d66;
-        }
-
-        /* 搜索面板 */
-        .search-results {
-            display: none;
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            max-width: 420px;
-            width: 100%;
-            background: #f7f2e6;
-            border: 3px double #b8a68b;
-            border-radius: 4px;
-            padding: 18px 22px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            z-index: 2000;
-            max-height: 60vh;
-            overflow-y: auto;
-            font-family: "SimSun", "宋体", serif;
-        }
-
-        .search-results.show {
-            display: block;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .search-results .result-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #3d3228;
-            border-bottom: 2px solid #ddd0bf;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
+            transition: background 0.2s;
             letter-spacing: 2px;
         }
 
-        .search-results .result-item {
-            font-size: 13px;
-            color: #4a3d30;
-            padding: 6px 0;
-            border-bottom: 1px solid #e6ddcf;
-            line-height: 1.9;
+        .password-input-group button:hover {
+            background: #8f7d66;
         }
 
-        .search-results .result-item:last-child {
-            border-bottom: none;
+        .password-result {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #6a3a2a;
+            min-height: 24px;
+            font-family: "SimSun", "宋体", serif;
         }
 
-        .search-results .result-item .highlight {
+        .password-result.error {
             color: #8a3a2a;
-            font-weight: bold;
         }
 
-        .search-results .result-item a {
-            color: #8a3a2a;
-            text-decoration: none;
-            border-bottom: 1px dashed #c9a090;
-            font-weight: bold;
+        .password-result.success {
+            color: #3a6a3a;
         }
 
-        .search-results .result-item a:hover {
-            color: #5a2018;
-            border-bottom-color: #5a2018;
-        }
-
-        .search-results .no-result {
-            font-size: 13px;
-            color: #8f7d66;
+        /* ===== 控制台入口（默认隐藏） ===== */
+        #consoleEntry {
+            display: none;
             text-align: center;
-            padding: 16px 0;
-            line-height: 2;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #e6ddcf;
         }
 
-        .search-results .close-search {
-            position: absolute;
-            top: 6px;
-            right: 12px;
-            font-size: 18px;
-            color: #8f7d66;
-            cursor: pointer;
+        #consoleEntry a {
+            color: #8a7a6a;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            transition: color 0.3s;
+        }
+
+        #consoleEntry a:hover {
+            color: #4a3d30;
+        }
+
+        /* ===== 聊天窗口 ===== */
+        .chat-window {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            max-height: 460px;
+            background: #1e1612;
+            border: 2px solid #4a3d30;
+            border-radius: 6px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            font-family: "Courier New", "SimSun", monospace;
+            overflow: hidden;
+        }
+
+        .chat-window.open {
+            display: flex;
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(12px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .chat-window .chat-header {
+            background: #2c241c;
+            padding: 8px 14px;
+            border-bottom: 1px solid #3d3228;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-window .chat-header .chat-title {
+            color: #8a7a6a;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .chat-window .chat-header .chat-close {
             background: none;
             border: none;
-            font-family: "SimSun", "宋体", serif;
+            color: #6a5a48;
+            font-size: 18px;
+            cursor: pointer;
             transition: color 0.2s;
-            padding: 4px 8px;
         }
 
-        .search-results .close-search:hover {
+        .chat-window .chat-header .chat-close:hover {
+            color: #f7f2e6;
+        }
+
+        .chat-window .chat-body {
+            flex: 1;
+            padding: 10px 14px;
+            overflow-y: auto;
+            max-height: 320px;
+            min-height: 100px;
+            background: #1a1410;
+        }
+
+        .chat-window .chat-body .msg {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #d6c9b8;
+            margin-bottom: 4px;
+            padding: 4px 8px;
+            border-left: 2px solid transparent;
+            word-wrap: break-word;
+        }
+
+        .chat-window .chat-body .msg.system {
+            color: #8a7a6a;
+            font-size: 12px;
+            border-left-color: #4a3d30;
+        }
+
+        .chat-window .chat-body .msg.npc {
+            color: #c9a090;
+            border-left-color: #6a3a2a;
+        }
+
+        .chat-window .chat-body .msg.user {
+            color: #d6c9b8;
+            border-left-color: #6a5a48;
+            text-align: right;
+        }
+
+        .chat-window .chat-input-area {
+            display: flex;
+            padding: 6px 10px 8px;
+            border-top: 1px solid #3d3228;
+            background: #1a1410;
+            flex-shrink: 0;
+            gap: 4px;
+        }
+
+        .chat-window .chat-input-area input {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-family: "Courier New", monospace;
+            background: #2c241c;
+            border: 1px solid #4a3d30;
+            border-radius: 2px;
+            color: #d6c9b8;
+            outline: none;
+        }
+
+        .chat-window .chat-input-area input:focus {
+            border-color: #6a5a48;
+        }
+
+        .chat-window .chat-input-area input::placeholder {
             color: #4a3d30;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-8px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .chat-window .chat-input-area button {
+            padding: 6px 14px;
+            font-size: 13px;
+            font-family: "Courier New", monospace;
+            background: #3d3228;
+            border: 1px solid #4a3d30;
+            border-radius: 2px;
+            color: #8a7a6a;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
         }
 
+        .chat-window .chat-input-area button:hover {
+            background: #4a3d30;
+            color: #d6c9b8;
+        }
+
+        /* ===== 响应式 ===== */
         @media (max-width: 640px) {
-            .search-bar {
-                margin-left: 0;
-                width: 100%;
-                margin-top: 6px;
+            .site-wrapper {
+                padding: 20px 16px;
             }
-            .search-bar input {
-                width: 100%;
-                flex: 1;
-            }
-            .search-bar input:focus {
-                width: 100%;
-            }
-            .search-results {
-                top: 70px;
-                right: 10px;
-                left: 10px;
-                max-width: none;
-                width: auto;
+            .header h1 {
+                font-size: 24px;
+                letter-spacing: 4px;
             }
             .nav {
-                flex-wrap: wrap;
+                gap: 14px;
+                font-size: 13px;
             }
+            .property-table {
+                font-size: 12px;
+            }
+            .property-table th,
+            .property-table td {
+                padding: 6px 4px;
+            }
+            .modal-box {
+                padding: 22px 18px;
+            }
+            .modal-box h2 {
+                font-size: 18px;
+            }
+            .password-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .password-input-group button {
+                padding: 10px;
+            }
+            .chat-window {
+                bottom: 60px;
+                right: 10px;
+                width: calc(100vw - 20px);
+                max-height: 70vh;
+            }
+            .chat-window .chat-body {
+                max-height: 50vh;
+                min-height: 80px;
+            }
+        }
+
+        /* 滚动条复古 */
+        .modal-box::-webkit-scrollbar,
+        .chat-window .chat-body::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-box::-webkit-scrollbar-track,
+        .chat-window .chat-body::-webkit-scrollbar-track {
+            background: #2c241c;
+        }
+        .modal-box::-webkit-scrollbar-thumb,
+        .chat-window .chat-body::-webkit-scrollbar-thumb {
+            background: #6a5a48;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="site-wrapper">
-        <!-- 页眉 -->
+
+    <div class="site-wrapper" id="app">
+
+        <!-- ===== 页眉 ===== -->
         <div class="header">
             <h1>安居房产中介</h1>
             <div class="sub">—— 您身边的安家之选 ——</div>
             <span class="divider"></span>
         </div>
 
-        <!-- 导航 + 搜索栏 -->
+        <!-- ===== 导航 ===== -->
         <div class="nav">
-            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; width:100%;">
-                <div style="display:flex; gap:20px; flex-wrap:wrap;">
-                    <a class="active">首页</a>
-                    <a onclick="openModal('about')">关于我们</a>
-                    <a onclick="openModal('contact')">联系我们</a>
-                </div>
-                <a href="search.html" style="color:#6a5a48; text-decoration:none; font-size:13px; border-bottom:2px solid transparent; transition:border-color 0.2s; padding:2px 4px; letter-spacing:1px;">
-                    🔍 检索
-                </a>
-            </div>
+            <a class="active">首页</a>
+            <a onclick="openModal('about')">关于我们</a>
+            <a onclick="openModal('contact')">联系我们</a>
         </div>
 
-        <!-- 欢迎语 -->
+        <!-- ===== 欢迎语 ===== -->
         <div class="welcome">
             <strong>安居房产</strong> 成立于2005年，十多年来服务本地居民超千户。
             诚信经营，房源真实。欢迎来电咨询或亲临门店。
         </div>
 
-        <!-- 房源列表 -->
+        <!-- ===== 房源列表 ===== -->
         <div class="section-title">▼ 热门房源推荐</div>
+
         <table class="property-table">
             <thead>
-                <tr><th>小区</th><th>户型</th><th>面积</th><th>价格</th><th>状态</th></tr>
+                <tr>
+                    <th>小区</th>
+                    <th>户型</th>
+                    <th>面积</th>
+                    <th>价格</th>
+                    <th>状态</th>
+                </tr>
             </thead>
             <tbody>
+                <!-- 302室 · 高亮 -->
                 <tr class="highlight-row">
-                    <td><a class="prop-link" onclick="openModal('property')">永宁路18号·302室</a></td>
-                    <td>两室一厅</td><td>76㎡</td><td>12.8万</td>
+                    <td>
+                        <a class="prop-link" onclick="openModal('property')">永宁路18号·302室</a>
+                    </td>
+                    <td>两室一厅</td>
+                    <td>76㎡</td>
+                    <td>12.8万</td>
                     <td><span class="status-badge">在售</span></td>
                 </tr>
                 <tr>
                     <td>建设路32号·501室</td>
-                    <td>三室两厅</td><td>98㎡</td><td>23.5万</td>
+                    <td>三室两厅</td>
+                    <td>98㎡</td>
+                    <td>23.5万</td>
                     <td><span class="status-badge status-sold">已售</span></td>
                 </tr>
                 <tr>
                     <td>和平巷6号·203室</td>
-                    <td>一室一厅</td><td>45㎡</td><td>8.6万</td>
+                    <td>一室一厅</td>
+                    <td>45㎡</td>
+                    <td>8.6万</td>
                     <td><span class="status-badge">在售</span></td>
                 </tr>
                 <tr>
                     <td>江陵大道85号·404室</td>
-                    <td>两室两厅</td><td>92㎡</td><td>19.2万</td>
+                    <td>两室两厅</td>
+                    <td>92㎡</td>
+                    <td>19.2万</td>
                     <td><span class="status-badge">在售</span></td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- 底部 -->
+        <!-- ===== 底部 ===== -->
         <div class="footer">
             <span class="update">* 本网站最后更新：2026年3月</span>
             <span class="whisper">— 江陵县 · 永宁路18号一楼 —</span>
-            <!-- ===== 控制台入口（默认隐藏） ===== -->
-            <div id="consoleEntry" style="display:none; text-align:center; margin-top:12px; padding-top:10px; border-top:1px solid #e6ddcf;">
-                <a href="#" onclick="openConsole()" style="color:#8a7a6a; text-decoration:none; font-size:14px; letter-spacing:4px; font-family:'Courier New',monospace; transition:color 0.3s;" 
-                   onmouseover="this.style.color='#4a3d30'" 
-                   onmouseout="this.style.color='#8a7a6a'">
-                    ⌨ 控制台
-                </a>
-            </div>
-            
-            <!-- ===== 模拟控制台窗口 ===== -->
-            <div class="chat-window" id="chatWindow">
-                <div class="chat-header">
-                    <span class="chat-title">◇ 永宁路18号 · 回声</span>
-                    <button class="chat-close" onclick="closeChat()">✕</button>
-                </div>
-                <div class="chat-body" id="chatBody">
-                    <div class="msg system">—— 你听到了一个声音 ——</div>
-                    <div class="msg npc">“你终于来了。我是陈永宁，这栋楼里困住的人。”</div>
-                    <div class="msg npc">“问我问题，或者直接说‘你是谁’。”</div>
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chatInput" placeholder="输入…" />
-                    <button onclick="sendChat()">发送</button>
-                </div>
-            </div>
         </div>
 
-        <!-- ===== 模态框1：房源详情 ===== -->
+        <!-- ===== 控制台入口（默认隐藏） ===== -->
+        <div id="consoleEntry">
+            <a href="#" onclick="openConsole()">⌨ 控制台</a>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ===== 模态框1：房源详情（302室） ===== -->
         <div class="modal-overlay" id="modal-property">
             <div class="modal-box">
                 <button class="close-btn" onclick="closeModal('property')">✕</button>
                 <h2>永宁路18号 · 302室</h2>
+
                 <div class="photo-placeholder">
-                    <img src="images/room.jpg" alt="302室客厅" style="width:100%; height:100%; object-fit:cover;" />
+                    <canvas id="roomCanvas" width="800" height="500"></canvas>
                 </div>
-                <div class="photo-caption">[ 室内实拍 · 摄于2025年11月 ]</div>
+                <div class="photo-caption">[ 室内实拍 · 摄于2021年11月 ]</div>
+
                 <div class="detail-meta">
                     <strong>位置：</strong>江陵县永宁路18号，3楼（共6层）<br />
                     <strong>户型：</strong>两室一厅一卫，南北通透<br />
@@ -285,11 +815,15 @@
                     <strong>年代：</strong>1998年建<br />
                     <strong>价格：</strong>12.8万（可小刀）
                 </div>
+
                 <p style="font-size:14px; color:#4a3d30; line-height:1.9;">
-                    老城核心地段，步行5分钟到菜市场、10分钟到县医院。(4T)
+                    老城核心地段，步行5分钟到菜市场、10分钟到县医院。
                     适合养老或刚需上车。房子已腾空，简单装修，拎包入住。
                 </p>
-                <div class="detail-footer">看房请联系中介 · 钥匙在店内</div>
+
+                <div class="detail-footer">
+                    看房请联系中介 · 钥匙在店内
+                </div>
             </div>
         </div>
 
@@ -301,13 +835,15 @@
                 <p style="font-size:14px; color:#5a4a38; margin-bottom:10px;">
                     安居房产中介成立至今，感谢每一位员工的付出。
                 </p>
+
                 <div class="team-photo">
-                    <img src="images/team.jpg" alt="员工合影" style="width:100%; height:100%; object-fit:cover;" />
+                    <canvas id="teamCanvas" width="800" height="450"></canvas>
                 </div>
                 <div class="team-caption">
                     左起：张伟（店长）、李婷、王芳、陈磊、苏晚（实习生）
-                    <span class="hint">｜ 摄于2025年7月</span>
+                    <span class="hint">｜ 摄于2021年7月</span>
                 </div>
+
                 <p style="font-size:13px; color:#8f7d66; margin-top:12px; line-height:1.8; text-align:center; border-top:1px solid #ddd0bf; padding-top:14px;">
                     — 用心服务，真诚待客 —
                 </p>
@@ -319,11 +855,13 @@
             <div class="modal-box">
                 <button class="close-btn" onclick="closeModal('contact')">✕</button>
                 <h2>联系我们</h2>
+
                 <div class="contact-info">
                     <strong>地址：</strong>江陵县永宁路18号一楼（安居房产中介）<br />
                     <strong>电话：</strong><span class="phone">0717-555-3847</span><br />
                     <strong>营业：</strong>工作日 9:00 – 17:00
                 </div>
+
                 <div class="password-section">
                     <label>🔑 在线看房预约 · 请输入看房密码</label>
                     <div class="password-input-group">
@@ -335,26 +873,25 @@
             </div>
         </div>
 
-        <!-- ===== 搜索面板 ===== -->
-        <div class="search-results" id="searchResults">
-            <button class="close-search" onclick="closeSearch()">✕</button>
-            <div class="result-title">🔍 搜索结果</div>
-            <div id="searchContent"></div>
+        <!-- ===== 模拟控制台窗口 ===== -->
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <span class="chat-title">◇ 永宁路18号 · 回声</span>
+                <button class="chat-close" onclick="closeChat()">✕</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg system">—— 你听到了一个声音 ——</div>
+                <div class="msg npc">“你终于来了。我是陈永宁，这栋楼里困住的人。”</div>
+                <div class="msg npc">“问我问题，或者直接说‘你是谁’。”</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="输入…" />
+                <button onclick="sendChat()">发送</button>
+            </div>
         </div>
 
     </div>
+
     <script src="script.js"></script>
-    <script>
-    // 检测 URL 参数，自动打开模态框
-    (function() {
-        const params = new URLSearchParams(window.location.search);
-        const modal = params.get('modal');
-        if (modal === 'about') {
-            setTimeout(function() {
-                openModal('about');
-            }, 300);
-        }
-    })();
-</script>
 </body>
 </html>
