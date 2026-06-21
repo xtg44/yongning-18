@@ -433,3 +433,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 如果玩家已经看过，立即显示
 updateConsoleEntry();
+// 打开控制台（原来的六个点功能）
+function openConsole() {
+    // 这里放原来六个点点击后触发的功能
+    // 例如：显示控制台对话框、打开聊天窗口等
+    alert('🔓 控制台已开启');
+    // 这里替换成原来的六个点功能
+}
