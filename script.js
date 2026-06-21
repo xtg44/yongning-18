@@ -389,54 +389,51 @@ document.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeChat();
 });
-// 在 script.js 末尾添加
 // ================================================================
 // 控制台入口控制
 // ================================================================
 
-// 检查玩家是否已经看过“联系我们”
-var hasSeenContact = localStorage.getItem('hasSeenContact') === 'true';
-
-// 控制台入口元素
+var hasSeenContact = false;
 var consoleEntry = document.getElementById('consoleEntry');
 
-function updateConsoleEntry() {
-    if (hasSeenContact) {
+// 保存原始的 openModal 函数
+var originalOpenModal = window.openModal;
+
+// 覆盖 openModal 函数
+window.openModal = function(type) {
+    // 调用原始函数
+    if (originalOpenModal) {
+        originalOpenModal(type);
+    }
+
+    // 如果打开的是联系我们，显示控制台入口
+    if (type === 'contact') {
+        hasSeenContact = true;
         if (consoleEntry) {
             consoleEntry.style.display = 'block';
             consoleEntry.style.animation = 'fadeIn 0.5s ease';
         }
-    } else {
-        if (consoleEntry) {
-            consoleEntry.style.display = 'none';
-        }
-    }
-}
-
-// 在“联系我们”模态框打开时标记已查看
-var originalOpenModal = window.openModal;
-window.openModal = function(type) {
-    if (type === 'contact') {
-        hasSeenContact = true;
-        localStorage.setItem('hasSeenContact', 'true');
-        updateConsoleEntry();
-    }
-    if (originalOpenModal) {
-        originalOpenModal(type);
+        // 保存到 localStorage，刷新后保留状态
+        try {
+            localStorage.setItem('hasSeenContact', 'true');
+        } catch(e) {}
     }
 };
 
-// 页面加载时更新入口状态
-document.addEventListener('DOMContentLoaded', function() {
-    updateConsoleEntry();
-});
+// 检查 localStorage
+try {
+    if (localStorage.getItem('hasSeenContact') === 'true') {
+        hasSeenContact = true;
+        if (consoleEntry) {
+            consoleEntry.style.display = 'block';
+        }
+    }
+} catch(e) {}
 
-// 如果玩家已经看过，立即显示
-updateConsoleEntry();
-// 打开控制台（原来的六个点功能）
+// 控制台点击功能
 function openConsole() {
-    // 这里放原来六个点点击后触发的功能
-    // 例如：显示控制台对话框、打开聊天窗口等
+    // 这里放原来的六个点功能
+    // 例如显示控制台对话框
     alert('🔓 控制台已开启');
-    // 这里替换成原来的六个点功能
+    // 如果你原来有控制台逻辑，替换这里的 alert
 }
