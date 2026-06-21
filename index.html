@@ -243,7 +243,14 @@
         <div class="footer">
             <span class="update">* 本网站最后更新：2026年3月</span>
             <span class="whisper">— 江陵县 · 永宁路18号一楼 —</span>
-            <span class="chat-trigger" onclick="openChat()" style="color:#d6c9b0; font-size:14px; letter-spacing:6px; cursor:pointer; user-select:none; display:block; margin-top:4px;">控制台</span>
+            <!-- 控制台入口（默认隐藏） -->
+            <div id="consoleEntry" style="display:none; text-align:center; margin-top:12px; padding-top:10px; border-top:1px solid #e6ddcf;">
+                <a href="#" onclick="openConsole()" style="color:#8a7a6a; text-decoration:none; font-size:14px; letter-spacing:4px; font-family:'Courier New',monospace; transition:color 0.3s;" 
+                   onmouseover="this.style.color='#4a3d30'" 
+                   onmouseout="this.style.color='#8a7a6a'">
+                    ⌨ 控制台
+                </a>
+            </div>
         </div>
 
         <!-- ===== 模态框1：房源详情 ===== -->
