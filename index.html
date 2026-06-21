@@ -250,6 +250,23 @@
                     ⌨ 控制台
                 </a>
             </div>
+            
+            <!-- ===== 模拟控制台窗口 ===== -->
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-header">
+                    <span class="chat-title">◇ 永宁路18号 · 回声</span>
+                    <button class="chat-close" onclick="closeChat()">✕</button>
+                </div>
+                <div class="chat-body" id="chatBody">
+                    <div class="msg system">—— 你听到了一个声音 ——</div>
+                    <div class="msg npc">“你终于来了。我是陈永宁，这栋楼里困住的人。”</div>
+                    <div class="msg npc">“问我问题，或者直接说‘你是谁’。”</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="输入…" />
+                    <button onclick="sendChat()">发送</button>
+                </div>
+            </div>
         </div>
 
         <!-- ===== 模态框1：房源详情 ===== -->
