@@ -388,5 +388,49 @@ document.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeChat();
 });
+// 在 script.js 末尾添加
+// ================================================================
+// 控制台入口控制
+// ================================================================
 
-console.log('%c💬 提示：试试点击页面最底部的“……”', 'font-size:13px; color:#8f7d66;');
+// 检查玩家是否已经看过“联系我们”
+var hasSeenContact = localStorage.getItem('hasSeenContact') === 'true';
+
+// 控制台入口元素
+var consoleEntry = document.getElementById('consoleEntry');
+
+function updateConsoleEntry() {
+    if (hasSeenContact) {
+        if (consoleEntry) {
+            consoleEntry.style.display = 'block';
+            consoleEntry.style.animation = 'fadeIn 0.5s ease';
+        }
+    } else {
+        if (consoleEntry) {
+            consoleEntry.style.display = 'none';
+        }
+    }
+}
+
+// 在“联系我们”模态框打开时标记已查看
+var originalOpenModal = window.openModal;
+window.openModal = function(type) {
+    if (type === 'contact') {
+        hasSeenContact = true;
+        localStorage.setItem('hasSeenContact', 'true');
+        updateConsoleEntry();
+    }
+    if (originalOpenModal) {
+        originalOpenModal(type);
+    }
+};
+
+// 页面加载时更新入口状态
+document.addEventListener('DOMContentLoaded', function() {
+    updateConsoleEntry();
+});
+
+// 如果玩家已经看过，立即显示
+updateConsoleEntry();
+
+console.log('%c🔍 提示：查看“联系我们”后，底部会出现“控制台”入口。', 'font-size:13px; color:#8f7d66;');
