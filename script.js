@@ -273,147 +273,33 @@ document.addEventListener('click', function(e) {
     }
 });
 // ================================================================
-// 6. 隐藏聊天功能（点击省略号触发）—— 动态生成窗口
+// 模拟控制台（陈永宁对话）
 // ================================================================
 
 // 对话数据
-const chatDB = [
+var chatDB = [
     { keywords: ['你是谁', '身份', '陈永宁', '你谁'], reply: '我是陈永宁。1998年，我死在这栋楼的地基里。我父亲陈建国是开发商，他为了赶工期，没有停工。我被埋在了水泥下面。' },
     { keywords: ['发生', '秘密', '楼', '这里'], reply: '这栋楼是用我的命换来的。每七年就会有人死去，那是我的怨气在寻找替身。但那个女孩……她不一样。她不是为了住进来的。她是来找东西的。' },
     { keywords: ['苏晚', '那个女孩', '住进来'], reply: '几个月前，她搬了进来。白天翻档案，晚上敲墙壁。有一天她挪开了那面镜子……然后我就再也感觉不到她走动了。她还在楼里，但已经不在了。' },
-    { keywords: ['密码', '日期', '号码', '0521'], reply: '那个女孩搬进来的时候，在墙上用粉笔写了一串数字——“0521”。她每天看着这串数字发呆。我不知道那是什么。也许是她自己的日子，也许是别人的。如果你想拿去当密码，那就试试吧。' },
+    { keywords: ['数字', '日期', '号码', '0521'], reply: '那个女孩搬进来的时候，在墙上用粉笔写了一串数字——“0521”。她每天看着这串数字发呆。我不知道那是什么。也许是她自己的日子，也许是别人的。' },
 ];
 
-// 创建聊天窗口（只创建一次）
-let chatWindow = null;
-let chatBody = null;
-let chatInput = null;
-let chatOpen = false;
-
-function createChatWindow() {
-    if (document.getElementById('chatWindow')) return;
-
-    const container = document.createElement('div');
-    container.id = 'chatWindow';
-    container.className = 'chat-window';
-    container.innerHTML = `
-        <div class="chat-header">
-            <span class="title">◇ 永宁路18号 · 回声</span>
-            <button class="close-btn" onclick="closeChat()">✕</button>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="msg system">—— 你听到了一个声音 ——</div>
-            <div class="msg npc">“你终于来了。我是陈永宁，这栋楼里困住的人。”</div>
-            <div class="msg npc">“问我问题，或者直接说‘你是谁’。”</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="输入…" />
-            <button onclick="sendChat()">发送</button>
-        </div>
-    `;
-    document.body.appendChild(container);
-
-    chatWindow = container;
-    chatBody = document.getElementById('chatBody');
-    chatInput = document.getElementById('chatInput');
-
-    // 回车发送
-    chatInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') sendChat();
-    });
-}
-
-function openChat() {
-    createChatWindow();
-    if (chatWindow) {
-        chatWindow.classList.add('open');
-        chatOpen = true;
-        setTimeout(() => { if (chatInput) chatInput.focus(); }, 100);
-    }
-}
-
-function closeChat() {
-    if (chatWindow) {
-        chatWindow.classList.remove('open');
-        chatOpen = false;
-    }
-}
-
-function sendChat() {
-    if (!chatInput || !chatBody) return;
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    // 用户消息
-    const userMsg = document.createElement('div');
-    userMsg.className = 'msg user';
-    userMsg.textContent = '> ' + text;
-    chatBody.appendChild(userMsg);
-    chatInput.value = '';
-
-    // 匹配回复
-    let reply = '❓ 我听不懂你的问题。试试问“你是谁”或“这里发生了什么”。';
-    for (const entry of chatDB) {
-        for (const kw of entry.keywords) {
-            if (text.includes(kw)) {
-                reply = entry.reply;
-                break;
-            }
-        }
-        if (reply !== '❓ 我听不懂你的问题。试试问“你是谁”或“这里发生了什么”。') break;
-    }
-
-    setTimeout(() => {
-        const npcMsg = document.createElement('div');
-        npcMsg.className = 'msg npc';
-        npcMsg.textContent = '👤 ' + reply;
-        chatBody.appendChild(npcMsg);
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }, 150);
-
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// 点击聊天窗口外部关闭
-document.addEventListener('click', function(e) {
-    if (!chatWindow) return;
-    if (chatOpen && !chatWindow.contains(e.target)) {
-        const trigger = e.target.closest('.chat-trigger');
-        if (!trigger) {
-            closeChat();
-        }
-    }
-});
-
-// ESC关闭
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeChat();
-});
-// ================================================================
-// 控制台入口控制
-// ================================================================
-
+// 控制台入口可见性
 var hasSeenContact = false;
 var consoleEntry = document.getElementById('consoleEntry');
 
-// 保存原始的 openModal 函数
+// 覆盖 openModal
 var originalOpenModal = window.openModal;
-
-// 覆盖 openModal 函数
 window.openModal = function(type) {
-    // 调用原始函数
     if (originalOpenModal) {
         originalOpenModal(type);
     }
-
-    // 如果打开的是联系我们，显示控制台入口
     if (type === 'contact') {
         hasSeenContact = true;
         if (consoleEntry) {
             consoleEntry.style.display = 'block';
             consoleEntry.style.animation = 'fadeIn 0.5s ease';
         }
-        // 保存到 localStorage，刷新后保留状态
         try {
             localStorage.setItem('hasSeenContact', 'true');
         } catch(e) {}
@@ -430,10 +316,79 @@ try {
     }
 } catch(e) {}
 
-// 控制台点击功能
+// 打开控制台
 function openConsole() {
-    // 这里放原来的六个点功能
-    // 例如显示控制台对话框
-    alert('🔓 控制台已开启');
-    // 如果你原来有控制台逻辑，替换这里的 alert
+    var window = document.getElementById('chatWindow');
+    if (window) {
+        window.classList.add('open');
+        var input = document.getElementById('chatInput');
+        if (input) setTimeout(function() { input.focus(); }, 100);
+    }
 }
+
+function closeChat() {
+    var window = document.getElementById('chatWindow');
+    if (window) {
+        window.classList.remove('open');
+    }
+}
+
+function sendChat() {
+    var input = document.getElementById('chatInput');
+    var body = document.getElementById('chatBody');
+    if (!input || !body) return;
+    var text = input.value.trim();
+    if (!text) return;
+
+    // 用户消息
+    var userMsg = document.createElement('div');
+    userMsg.className = 'msg user';
+    userMsg.textContent = '> ' + text;
+    body.appendChild(userMsg);
+    input.value = '';
+
+    // 匹配回复
+    var reply = '❓ 我听不懂你的问题。试试问“你是谁”或“这里发生了什么”。';
+    for (var i = 0; i < chatDB.length; i++) {
+        var matched = false;
+        for (var j = 0; j < chatDB[i].keywords.length; j++) {
+            if (text.indexOf(chatDB[i].keywords[j]) !== -1) {
+                matched = true;
+                break;
+            }
+        }
+        if (matched) {
+            reply = chatDB[i].reply;
+            break;
+        }
+    }
+
+    setTimeout(function() {
+        var npcMsg = document.createElement('div');
+        npcMsg.className = 'msg npc';
+        npcMsg.textContent = '👤 ' + reply;
+        body.appendChild(npcMsg);
+        body.scrollTop = body.scrollHeight;
+    }, 200);
+
+    body.scrollTop = body.scrollHeight;
+}
+
+// 回车发送
+document.getElementById('chatInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendChat();
+});
+
+// 点击外部关闭聊天
+document.addEventListener('click', function(e) {
+    var window = document.getElementById('chatWindow');
+    if (!window) return;
+    if (window.classList.contains('open') && !window.contains(e.target) && e.target.id !== 'consoleEntry' && !e.target.closest('#consoleEntry')) {
+        closeChat();
+    }
+});
+
+// ESC关闭
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeChat();
+});
